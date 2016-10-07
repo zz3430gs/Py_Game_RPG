@@ -12,7 +12,6 @@ WATER = 3
 WOOD = 4
 PENT = 5
 
-
 tile_map = [
     [WALL,WALL,WALL,WALL,WALL,WALL,WALL],
     [WALL,HALL,HALL,HALL,HALL,HALL,WALL],
@@ -23,7 +22,7 @@ tile_map = [
     [WALL,WALL,WALL,WALL,WALL,WALL,WALL],
     [WOOD,WOOD,WOOD,WOOD,WOOD,WOOD,WOOD]
 ]
-
+HERO = pygame.image.load('sprites/Hero.png')
 textures = {
     WALL: pygame.image.load('sprites/dung_wall_25px.png'),
     HALL: pygame.image.load('sprites/dung_floor_25px.png'),
@@ -32,6 +31,7 @@ textures = {
     WOOD: pygame.image.load('sprites/wood_25px.png'),
     PENT: pygame.image.load('sprites/penta_25px.png')
 }
+hero_pos = [0, 0]
 
 TILE_SIZE = 25
 MAP_WIDTH = 20
@@ -61,6 +61,7 @@ def modify_map_tiles(map_to_mod):
 modify_map_tiles(rand_tile_map)
 print(rand_tile_map)
 
+
 pygame.init()
 SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
 
@@ -72,4 +73,5 @@ while True:
     for row in range(MAP_HEIGHT):
         for column in range(MAP_WIDTH):
             SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
+    SURF.blit(HERO(hero_pos[0]*TILE_SIZE, hero_pos[1]*TILE_SIZE))
     pygame.display.update()
