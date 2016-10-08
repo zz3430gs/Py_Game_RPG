@@ -6,7 +6,7 @@ from pygame.locals import *
 
 
 # http://usingpython.com/adding-an-inventory/
-
+# Sort out how to make walls block movement
 WALL = 0
 HALL = 1
 DOOR = 2
@@ -76,8 +76,9 @@ while True:
             pygame.quit()
             sys.exit
         # THIS BLOCK TO BE SEPERTED INTO THE INPUT CONTROLLER
+        # TODO: write a check for walls method that constantly runs, and checks if the four surrounding blocks are walls
         elif event.type == KEYDOWN:
-            if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1:
+            if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1 and hero_pos[0]+1 != WALL:
                 hero_pos[0] += 1
             if (event.key == K_LEFT) and hero_pos[0] >= 1:
                 hero_pos[0] -= 1
