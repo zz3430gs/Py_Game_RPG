@@ -60,6 +60,7 @@ def modify_map_tiles(map_to_mod):
             else:
                 tile = WOOD
             map_to_mod[rw][cl] = tile
+
 modify_map_tiles(rand_tile_map)
 print(rand_tile_map)
 
