@@ -68,9 +68,19 @@ SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
 while True:
     # Listen for events, this is about to get a whole lot bigger
     for event in pygame.event.get():
+        print(event)
         if event.type == QUIT:
             pygame.quit()
             sys.exit
+        elif event.type == KEYDOWN:
+            if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1:
+                hero_pos[0] += 1
+            if (event.key == K_LEFT) and hero_pos[0] >= 1:
+                hero_pos[0] -= 1
+            if (event.key == K_UP) and hero_pos[1] >= 1:
+                hero_pos[1] -= 1
+            if (event.key == K_DOWN) and hero_pos[1] < MAP_HEIGHT-1:
+                hero_pos[1] += 1
     # Rando gen the map
     for row in range(MAP_HEIGHT):
         for column in range(MAP_WIDTH):
