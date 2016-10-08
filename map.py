@@ -5,6 +5,8 @@ import sys
 from pygame.locals import *
 
 
+# http://usingpython.com/adding-an-inventory/
+
 WALL = 0
 HALL = 1
 DOOR = 2
