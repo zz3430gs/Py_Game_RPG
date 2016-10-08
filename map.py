@@ -72,6 +72,7 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit
+        # THIS BLOCK TO BE SEPERTED INTO THE INPUT CONTROLLER
         elif event.type == KEYDOWN:
             if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1:
                 hero_pos[0] += 1
@@ -81,6 +82,9 @@ while True:
                 hero_pos[1] -= 1
             if (event.key == K_DOWN) and hero_pos[1] < MAP_HEIGHT-1:
                 hero_pos[1] += 1
+            if (event.key == K_a):
+    #             ATTACK!
+                print('ATTACKING!')
     # Rando gen the map
     for row in range(MAP_HEIGHT):
         for column in range(MAP_WIDTH):
