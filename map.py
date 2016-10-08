@@ -67,6 +67,7 @@ print(rand_tile_map)
 
 pygame.init()
 SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
+def check_walls_near_hero(map, hero_pos):
 
 while True:
     # Listen for events, this is about to get a whole lot bigger
@@ -76,6 +77,7 @@ while True:
             pygame.quit()
             sys.exit
         # THIS BLOCK TO BE SEPERTED INTO THE INPUT CONTROLLER
+
         # TODO: write a check for walls method that constantly runs, and checks if the four surrounding blocks are walls
         elif event.type == KEYDOWN:
             if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1 and hero_pos[0]+1 != WALL:
