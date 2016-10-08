@@ -66,12 +66,16 @@ pygame.init()
 SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
 
 while True:
+    # Listen for events, this is about to get a whole lot bigger
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit
+    # Rando gen the map
     for row in range(MAP_HEIGHT):
         for column in range(MAP_WIDTH):
             SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
-    SURF.blit(HERO(hero_pos[0]*TILE_SIZE, hero_pos[1]*TILE_SIZE))
+
+    # display the Hero
+    SURF.blit(HERO,(hero_pos[0]*TILE_SIZE, hero_pos[1]*TILE_SIZE))
     pygame.display.update()
