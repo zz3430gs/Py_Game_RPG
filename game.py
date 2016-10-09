@@ -1,9 +1,27 @@
 import pygame, sys
 from pygame.locals import *
 from colors import *
+# import map
+import math
 
 
+def render_xp_bar( base_surf, hero):
+    x_y_wid_hei_for_outline = (575, 180, 200, 15)
+    fill_width = determine_xp_bar(hero['xp'], hero['next_lvl'])
+    x_y_wid_hei_for_fill = (576, 181, fill_width, 13)
+    empty_bar = pygame.draw.rect(base_surf, Black, x_y_wid_hei_for_outline, 1)
+    fill_bar = pygame.draw.rect(base_surf, White, x_y_wid_hei_for_fill)
 
+
+def determine_xp_bar( xp, next_lvl):
+    #     198 pixels max length so... xp/nxt_lvl = percent
+    percent = (xp / next_lvl)
+    bar_width = math.floor(percent * 198)
+    return bar_width
+
+
+hero = {'xp':330,
+        'next_lvl' : 500}
 pygame.init()
 DISPLAYSURF = pygame.display.set_mode((800,600))
 pygame.display.set_caption('Hello World')
@@ -25,7 +43,8 @@ while True:
     pygame.draw.rect(DISPLAYSURF, Green, command_box_dimensions)
     pygame.draw.rect(DISPLAYSURF, Purple, inventory_box_dimensions)
     pygame.draw.rect(DISPLAYSURF, Blue, battle_log)
-    DISPLAYSURF.blit(textSurfaceObj, textRectObj)
+    render_xp_bar(DISPLAYSURF,hero)
+    # DISPLAYSURF.blit(textSurfaceObj, textRectObj)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -33,9 +52,7 @@ while True:
     pygame.display.update()
 
 
-def draw_char_status():
 
-    '''THIS SECTION OF CODE MOVES A CAT IMAGE AROUND, BASIC Animation'''
 # pygame.init()
 # FPS = 30
 # fpsClock = pygame.time.Clock()
@@ -75,4 +92,3 @@ def draw_char_status():
 #
 #     pygame.display.update()
 #     fpsClock.tick(FPS)
-    '''THIS ENDS THE ANIMATION BASICS'''
