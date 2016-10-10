@@ -5,6 +5,8 @@ from colors import *
 import math
 
 
+
+
 def render_xp_bar( base_surf, hero):
     x_y_wid_hei_for_outline = (575, 180, 200, 15)
     fill_width = determine_xp_bar(hero['xp'], hero['next_lvl'])

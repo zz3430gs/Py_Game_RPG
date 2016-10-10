@@ -28,6 +28,7 @@ class Map_Maker:
         ]
 
         HERO = pygame.image.load('sprites/Hero.png')
+        hero_pos = [0, 0]
 
         textures = {
             WALL: pygame.image.load('sprites/dung_wall_25px.png'),
@@ -37,7 +38,7 @@ class Map_Maker:
             WOOD: pygame.image.load('sprites/wood_25px.png'),
             PENT: pygame.image.load('sprites/penta_25px.png')
         }
-        hero_pos = [0, 0]
+
 
         TILE_SIZE = 25
         MAP_WIDTH = 50
@@ -73,7 +74,7 @@ class Map_Maker:
 
 
         pygame.init()
-        SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
+        MAIN_SURF = pygame.display.set_mode((SCREEN_WIDTH*TILE_SIZE, SCREEN_HEIGHT*TILE_SIZE))
         # def check_walls_near_hero(map, hero_pos):
 
         while True:
@@ -99,7 +100,7 @@ class Map_Maker:
             #             ATTACK!
                         print('ATTACKING!')
             # Rando gen the map
-            # SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
+            # MAIN_SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
 
         def draw_map(self,screen,camera_x,camera_y):
             for y in range(MAP_HEIGHT):
@@ -107,7 +108,7 @@ class Map_Maker:
                     tile_pos_x = (x*TILE_SIZE)-camera_x
                     tile_pos_y = (y*TILE_SIZE)-camera_y
                     if (onscreen(tile_pos_x,tile_pos_y)):
-                        SURF[y][x].draw(screen,x*TILE_SIZE,y*TILE_SIZE)
+                        MAIN_SURF[y][x].draw(screen,x*TILE_SIZE,y*TILE_SIZE)
 
         def onscreen(x,y):
             return not (x<TILE_SIZE or x>SCREEN_WIDTH or
@@ -115,11 +116,11 @@ class Map_Maker:
 
             # for row in range(MAP_HEIGHT):
             #     for column in range(MAP_WIDTH):
-            #         SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
+            #         MAIN_SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
 
             # display the Hero
-            SURF.blit(HERO,(hero_pos[0]*TILE_SIZE, hero_pos[1]*TILE_SIZE))
-            pygame.display.update()
+        MAIN_SURF.blit(HERO,(hero_pos[0]*TILE_SIZE, hero_pos[1]*TILE_SIZE))
+        pygame.display.update()
 
 mapmaker= Map_Maker
 mapmaker()

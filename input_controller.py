@@ -5,7 +5,7 @@ import pygame
 import sys
 from pygame.locals import *
 from map import *
-
+from game import *
 
 def key_listener():
     while True:
