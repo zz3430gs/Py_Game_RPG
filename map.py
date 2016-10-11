@@ -16,21 +16,10 @@ class Map_Maker:
         WOOD = 4
         PENT = 5
 
-        tile_map = [
-            [WALL,WALL,WALL,WALL,WALL,WALL,WALL],
-            [WALL,HALL,HALL,HALL,HALL,HALL,WALL],
-            [WALL,HALL,WALL,WALL,WALL,DOOR,WALL],
-            [WALL,HALL,DOOR,HALL,HALL,HALL,WALL],
-            [WALL,HALL,WALL,HALL,HALL,HALL,WALL],
-            [WALL,HALL,WALL,WALL,WALL,WALL,WALL],
-            [WALL,WALL,WALL,WALL,WALL,WALL,WALL],
-            [WOOD,WOOD,WOOD,WOOD,WOOD,WOOD,WOOD]
-        ]
-
         HERO = pygame.image.load('sprites/Hero.png')
         hero_pos = [0, 0]
 
-        textures = {
+        self.textures = {
             WALL: pygame.image.load('sprites/dung_wall_25px.png'),
             HALL: pygame.image.load('sprites/dung_floor_25px.png'),
             DOOR: pygame.image.load('sprites/door_25px.png'),
@@ -40,20 +29,20 @@ class Map_Maker:
         }
 
 
-        TILE_SIZE = 25
-        MAP_WIDTH = 50
-        MAP_HEIGHT = 50
-        SCREEN_WIDTH = 22
-        SCREEN_HEIGHT = 20
+        self.TILE_SIZE = 25
+        self.MAP_WIDTH = 50
+        self.MAP_HEIGHT = 50
+        self.SCREEN_WIDTH = 22
+        self.SCREEN_HEIGHT = 20
 
-        resources = [WALL,WATER,DOOR,WOOD,HALL,PENT]
+        self.resources = [WALL,WATER,DOOR,WOOD,HALL,PENT]
         # Hard Coded for now, this will randomize poorly atm, but not check for
         # rand_tile_map = [[random.choice(resources) for w in range(MAP_WIDTH)] for h in range(MAP_HEIGHT)]
-        rand_tile_map = [[WALL for w in range(MAP_WIDTH)] for h in range(MAP_HEIGHT)]
+        self.rand_tile_map = [[HALL for w in range(self.MAP_WIDTH)] for h in range(self.MAP_HEIGHT)]
 
         def modify_map_tiles(map_to_mod):
-            for rw in range(MAP_HEIGHT):
-                for cl in range(MAP_WIDTH):
+            for rw in range(self.MAP_HEIGHT):
+                for cl in range(self.MAP_WIDTH):
                     randNum = random.randint(0,30)
                     if randNum == 0:
                         tile = WATER
@@ -69,12 +58,12 @@ class Map_Maker:
                         tile = WOOD
                     map_to_mod[rw][cl] = tile
 
-        modify_map_tiles(rand_tile_map)
-        print(rand_tile_map)
+        modify_map_tiles(self.rand_tile_map)
+        print(self.rand_tile_map)
 
 
         pygame.init()
-        MAIN_SURF = pygame.display.set_mode((SCREEN_WIDTH*TILE_SIZE, SCREEN_HEIGHT*TILE_SIZE))
+        MAIN_SURF = pygame.display.set_mode((self.SCREEN_WIDTH*self.TILE_SIZE, self.SCREEN_HEIGHT*self.TILE_SIZE))
         # def check_walls_near_hero(map, hero_pos):
 
         while True:
@@ -88,13 +77,13 @@ class Map_Maker:
 
                 # TODO: write a check for walls method that constantly runs, and checks if the four surrounding blocks are walls
                 elif event.type == KEYDOWN:
-                    if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1 and hero_pos[0]+1 != WALL:
+                    if(event.key == K_RIGHT) and hero_pos[0] < self.MAP_WIDTH-1 and hero_pos[0]+1 != WALL:
                         hero_pos[0] += 1
                     if (event.key == K_LEFT) and hero_pos[0] >= 1:
                         hero_pos[0] -= 1
                     if (event.key == K_UP) and hero_pos[1] >= 1:
                         hero_pos[1] -= 1
-                    if (event.key == K_DOWN) and hero_pos[1] < MAP_HEIGHT-1:
+                    if (event.key == K_DOWN) and hero_pos[1] < self.MAP_HEIGHT-1:
                         hero_pos[1] += 1
                     if (event.key == K_a):
             #             ATTACK!
@@ -103,23 +92,23 @@ class Map_Maker:
             # MAIN_SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
 
         def draw_map(self,screen,camera_x,camera_y):
-            for y in range(MAP_HEIGHT):
-                for x in range(MAP_WIDTH):
-                    tile_pos_x = (x*TILE_SIZE)-camera_x
-                    tile_pos_y = (y*TILE_SIZE)-camera_y
+            for y in range(self.MAP_HEIGHT):
+                for x in range(self.MAP_WIDTH):
+                    tile_pos_x = (x*self.TILE_SIZE)-camera_x
+                    tile_pos_y = (y*self.TILE_SIZE)-camera_y
                     if (onscreen(tile_pos_x,tile_pos_y)):
-                        MAIN_SURF[y][x].draw(screen,x*TILE_SIZE,y*TILE_SIZE)
+                        MAIN_SURF[y][x].draw(screen,x*self.TILE_SIZE,y*self.TILE_SIZE)
 
         def onscreen(x,y):
-            return not (x<TILE_SIZE or x>SCREEN_WIDTH or
-                        y<TILE_SIZE or y>SCREEN_HEIGHT)
+            return not (x<self.TILE_SIZE or x>self.SCREEN_WIDTH or
+                        y<self.TILE_SIZE or y>self.SCREEN_HEIGHT)
 
             # for row in range(MAP_HEIGHT):
             #     for column in range(MAP_WIDTH):
             #         MAIN_SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
 
             # display the Hero
-        MAIN_SURF.blit(HERO,(hero_pos[0]*TILE_SIZE, hero_pos[1]*TILE_SIZE))
+        MAIN_SURF.blit(HERO,(hero_pos[0]*self.TILE_SIZE, hero_pos[1]*self.TILE_SIZE))
         pygame.display.update()
 
 mapmaker= Map_Maker

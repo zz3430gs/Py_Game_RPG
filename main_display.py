@@ -5,14 +5,15 @@ import map
 import math
 
 class Main_Display:
-    def __init__(self, Game):
+    def __init__(self):
         self.window_width = 800
         self.window_height = 600
-
+        self.right_surf = pygame.draw
         pygame.init()
         MAIN_SURFACE = pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption('Simple RPG')
-
+    @staticmethod
+    #     Running the game requires the text_manager, map_manager, game_manager, and input_contorller
 
     def render_start_menu(self):
         print('This is working hopefully')
@@ -82,8 +83,9 @@ class Main_Display:
         if cur_hp == max_hp:
             length = 198
         return length
+'''------------------------ENDS STAT PAGE------------------------------'''
 
-    def render_basic_commands(self,base_surf):
+    def render_basic_commands(base_surf):
         x_y_wid_hei =(550,200,250,200)
         commands = pygame.draw.rect(base_surf,Yellow,x_y_wid_hei)
 #         TODO: Create This subsurface to live update as game state changes

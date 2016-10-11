@@ -22,7 +22,7 @@ def determine_xp_bar( xp, next_lvl):
     return bar_width
 
 
-hero = {'xp':330,
+hero = {'xp': 330,
         'next_lvl' : 500}
 pygame.init()
 DISPLAYSURF = pygame.display.set_mode((800,600))

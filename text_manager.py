@@ -7,3 +7,4 @@ class text_manager:
         battle_box_y = 0
 
         menu_col_x = 0
+        menu_col_y = 0
