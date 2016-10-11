@@ -83,7 +83,7 @@ class Main_Display:
         if cur_hp == max_hp:
             length = 198
         return length
-'''------------------------ENDS STAT PAGE------------------------------'''
+    '''------------------------ENDS STAT PAGE------------------------------'''
 
     def render_basic_commands(base_surf):
         x_y_wid_hei =(550,200,250,200)

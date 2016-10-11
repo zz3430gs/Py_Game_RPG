@@ -39,7 +39,10 @@ class graphics_manager:
 
         # TODO: Make camera following player METHOD(PASS CURRENT PLAYER X & Y)
 
+
     def make_possible_cells_cam_can_see(self):
+        # make an array of rows of cells, so it will be an array 20 arrays tall, each of those 22 rectangles wide.
+        # these rectangles will be the things that get blitted over by the sprites of world bits
         visible_tiles = []
         single_row = []
         # this offsets the tiles by 10 pixels from top and left
@@ -57,11 +60,24 @@ class graphics_manager:
             # make the tile appear one tile lower on the screen
             insert_tile_start_y += 25
             insert_tile_start_x = 10
-
         return visible_tiles
 
-#         make an array of rows of cells, so it will be an array 20 arrays long, each of those 22 rectangles long.
-#         these rectangles will be the things that get blitted over by the sprites of world bits
+    def camera_chase_hero(self, hero_x, hero_y):
+        # center based on cam_width
+        # Never wander from the players position!!! NEVER!!
+        self.cam_loc_x = hero_x - int(self.cam_width/2.0)
+        self.cam_loc_y = hero_y - int(self.cam_height/2.0)
+        # if the camera has wandered off to center
+        if self.cam_loc_x < 0:
+            # get it in line
+            self.camera_x = 0
+        elif self.cam_loc_x > 0:
+            self.camera_x = self.cam_max_pan_x
+        if self.cam_loc_y < 0:
+            self.camera_y = 0
+        elif self.cam_loc_y>self.cam_max_pan_y:
+            self.camera_y = 0
+
 
 
 
