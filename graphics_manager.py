@@ -40,7 +40,26 @@ class graphics_manager:
         # TODO: Make camera following player METHOD(PASS CURRENT PLAYER X & Y)
 
     def make_possible_cells_cam_can_see(self):
-        for
+        visible_tiles = []
+        single_row = []
+        # this offsets the tiles by 10 pixels from top and left
+        insert_tile_start_x = 10
+        insert_tile_start_y = 10
+        for row in range(22):
+            for column in range(20):
+                this_tile = pygame.Rect(insert_tile_start_x, insert_tile_start_y, 25, 25)
+                single_row.append(this_tile)
+                insert_tile_start_x += 25
+            #     append the row to the entirety
+            visible_tiles.append(single_row)
+            # reset variables
+            single_row = []
+            # make the tile appear one tile lower on the screen
+            insert_tile_start_y += 25
+            insert_tile_start_x = 10
+
+        return visible_tiles
+
 #         make an array of rows of cells, so it will be an array 20 arrays long, each of those 22 rectangles long.
 #         these rectangles will be the things that get blitted over by the sprites of world bits
 
