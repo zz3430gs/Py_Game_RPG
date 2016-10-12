@@ -5,7 +5,8 @@ import sys
 from pygame.locals import *
 
 class Map_Maker:
-    def __init__(self):
+
+    def __init__(self,MAIN_SURF):
 
         # http://usingpython.com/adding-an-inventory/
         # Sort out how to make walls block movement
@@ -62,8 +63,8 @@ class Map_Maker:
         print(self.rand_tile_map)
 
 
-        pygame.init()
-        MAIN_SURF = pygame.display.set_mode((self.SCREEN_WIDTH*self.TILE_SIZE, self.SCREEN_HEIGHT*self.TILE_SIZE))
+
+        map_surface = pygame.display.set_mode((self.SCREEN_WIDTH*self.TILE_SIZE, self.SCREEN_HEIGHT*self.TILE_SIZE))
         # def check_walls_near_hero(map, hero_pos):
 
         while True:
@@ -97,7 +98,7 @@ class Map_Maker:
                     tile_pos_x = (x*self.TILE_SIZE)-camera_x
                     tile_pos_y = (y*self.TILE_SIZE)-camera_y
                     if (onscreen(tile_pos_x,tile_pos_y)):
-                        MAIN_SURF[y][x].draw(screen,x*self.TILE_SIZE,y*self.TILE_SIZE)
+                        map_surface[y][x].draw(screen,x*self.TILE_SIZE,y*self.TILE_SIZE)
 
         def onscreen(x,y):
             return not (x<self.TILE_SIZE or x>self.SCREEN_WIDTH or
@@ -108,8 +109,6 @@ class Map_Maker:
             #         MAIN_SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
 
             # display the Hero
-        MAIN_SURF.blit(HERO,(hero_pos[0]*self.TILE_SIZE, hero_pos[1]*self.TILE_SIZE))
+        map_surface.blit(HERO,(hero_pos[0]*self.TILE_SIZE, hero_pos[1]*self.TILE_SIZE))
         pygame.display.update()
 
-mapmaker= Map_Maker
-mapmaker()

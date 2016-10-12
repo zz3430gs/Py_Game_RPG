@@ -3,12 +3,22 @@ from pygame.locals import *
 from colors import *
 import map
 import math
+import text_manager as tm
+
+# TODO:[] Char Stats Box
+# TODO:[] Battle Box
+# TODO:[] Main Map
+# TODO:[] Whole Window
+# TODO:[]
+# TODO:[]
+# TODO:[]
 
 class Main_Display:
     def __init__(self):
         self.window_width = 800
         self.window_height = 600
-        self.right_surf = pygame.draw
+
+    def run_screen(self):
         pygame.init()
         MAIN_SURFACE = pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption('Simple RPG')

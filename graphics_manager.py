@@ -3,7 +3,7 @@ import pygame
 
 class graphics_manager:
     global Map_Maker
-
+    # needs to know about the map instances, so it can call the maps methods for tiling sprites
     def __init__(self):
         # This is the number of tiles the camera will be able to see on X-axis
         self.cam_width = 22
@@ -23,7 +23,7 @@ class graphics_manager:
 
         self.mainSurf = pygame.display.set_mode((800, 600))
         self.clock = pygame.time.Clock()
-
+        # sprite listing
         '''------------------------------SPRITES------------------------------'''
         self.hero = pygame.image.load('sprites/Hero.png')
         '''----------ENVIRONMENT SPRITES----------'''
@@ -33,7 +33,7 @@ class graphics_manager:
         self.wood = pygame.image.load('sprites/wood_25px.png')
         self.pent = pygame.image.load('sprites/penta_25px.png')
         self.water = pygame.image.load('sprites/water_25px.png')
-
+        # cameras location
         self.cam_loc_x = 0
         self.cam_loc_y = 0
 
