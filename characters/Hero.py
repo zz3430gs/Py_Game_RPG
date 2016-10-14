@@ -14,6 +14,8 @@ class Hero(Character):
         self.level = 1
         self.money = 5
         self.next_level = 100
+        # todo: Someday have multiple sprites for the hero.
+        self.image = 'sprites/Hero.png'
         '''self.killcount = 0'''
 
     # TODO: Add a kill Counter for additional Highscore info
@@ -49,7 +51,6 @@ class Hero(Character):
             self.gain_level()
         else:
             pass
-        # print('{} gained {} xp!'.format(self.name, xp))
 
     def gain_level(self):
         # Sort through the Dictionary of Levels,
@@ -60,17 +61,8 @@ class Hero(Character):
         if self.level % 3 == 0:
             self.armor += 1
         self.level += 1
-        # print('{} Gained a Level! {} is now level {}!\n')
         self.next_level = next_level_xp
 
-    '''NO LONGER NEED THESE SINCE THEY WILL BE DISPLAYED ON THE GUI... HOPEFULLY...'''
-    # def status(self):
-    #     #     '| Before we can begin you need to actually select one of these options!        |\n'
-    #     print('|_________________________________HERO_STATUS__________________________________|\n'
-    #           '                       HP {}/{}   Level {}   XP {}/{}                          \n'
-    #           '|______________________________________________________________________________|'
-    #           .format(self.current_hp, self.max_hp, self.level,
-    #                   self.xp, self.next_level))
 
     def gain_hp_from_rest(self, full_rest):
         # full_rest is a boolean
@@ -78,10 +70,8 @@ class Hero(Character):
             self.current_hp += self.level*2
             if self.current_hp>self.max_hp:
                 self.current_hp = self.max_hp
-            # print('By getting a full nights sleep you gained {} hitpoints.'.format(self.level*2))
         if full_rest == False:
             self.current_hp += self.level
             if self.current_hp>self.max_hp:
                 self.current_hp = self.max_hp
-            # print("By being interrupted by an attack you only gained {} hitpoints.".format(self.level))
 

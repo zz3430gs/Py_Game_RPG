@@ -20,7 +20,7 @@ class Main_Display:
 
     def run_screen(self):
         pygame.init()
-        MAIN_SURFACE = pygame.display.set_mode((self.window_width, self.window_height))
+        pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption('Simple RPG')
     @staticmethod
     #     Running the game requires the text_manager, map_manager, game_manager, and input_contorller

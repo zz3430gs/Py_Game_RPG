@@ -5,7 +5,7 @@ import pygame
 import sys
 from pygame.locals import *
 import map
-
+from characters.Hero import Hero
 
 class input_controller:
     def __init__(self):
@@ -20,18 +20,18 @@ class input_controller:
                     pygame.quit()
                     sys.exit
                 # THIS BLOCK TO BE SEPERTED INTO THE INPUT CONTROLLER
-            #     elif event.type == KEYDOWN:
-            #         if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1:
-            #             hero_pos[0] += 1
-            #         if (event.key == K_LEFT) and hero_pos[0] >= 1:
-            #             hero_pos[0] -= 1
-            #         if (event.key == K_UP) and hero_pos[1] >= 1:
-            #             hero_pos[1] -= 1
-            #         if (event.key == K_DOWN) and hero_pos[1] < MAP_HEIGHT-1:
-            #             hero_pos[1] += 1
-            #         if (event.key == K_a):
-            # #             ATTACK!
-            #             print('ATTACKING!')
+                elif event.type == KEYDOWN:
+                    if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1:
+                        hero_pos[0] += 1
+                    if (event.key == K_LEFT) and hero_pos[0] >= 1:
+                        hero_pos[0] -= 1
+                    if (event.key == K_UP) and hero_pos[1] >= 1:
+                        hero_pos[1] -= 1
+                    if (event.key == K_DOWN) and hero_pos[1] < MAP_HEIGHT-1:
+                        hero_pos[1] += 1
+                    if (event.key == K_a):
+            #             ATTACK!
+                        print('ATTACKING!')
 
     # def is_valid_move(self,x,y,map):
     #     if map[y][x]!=

@@ -23,16 +23,25 @@ class graphics_manager:
 
         self.mainSurf = pygame.display.set_mode((800, 600))
         self.clock = pygame.time.Clock()
+        WALL = 0
+        HALL = 1
+        DOOR = 2
+        WATER = 3
+        WOOD = 4
+        PENT = 5
         # sprite listing
         '''------------------------------SPRITES------------------------------'''
         self.hero = pygame.image.load('sprites/Hero.png')
         '''----------ENVIRONMENT SPRITES----------'''
-        self.wall = pygame.image.load('sprites/dung_wall_25px.png')
-        self.hall = pygame.image.load('sprites/dung_floor_25px.png')
-        self.door = pygame.image.load('sprites/door_25px.png')
-        self.wood = pygame.image.load('sprites/wood_25px.png')
-        self.pent = pygame.image.load('sprites/penta_25px.png')
-        self.water = pygame.image.load('sprites/water_25px.png')
+        self.textures = {
+            WALL: pygame.image.load('sprites/dung_wall_25px.png'),
+            HALL: pygame.image.load('sprites/dung_floor_25px.png'),
+            DOOR: pygame.image.load('sprites/door_25px.png'),
+            WATER: pygame.image.load('sprites/water_25px.png'),
+            WOOD: pygame.image.load('sprites/wood_25px.png'),
+            PENT: pygame.image.load('sprites/penta_25px.png')
+        }
+
         # cameras location
         self.cam_loc_x = 0
         self.cam_loc_y = 0
@@ -78,6 +87,7 @@ class graphics_manager:
         elif self.cam_loc_y>self.cam_max_pan_y:
             self.camera_y = 0
 
-
-
+    @staticmethod
+    def render_hero(hero):
+        print('blit hero here')
 

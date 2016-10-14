@@ -1,12 +1,16 @@
 import pygame
 import random
+import math
 import colors
 import sys
 from pygame.locals import *
+import pcdungeon as pcd
+
+
 
 class Map_Maker:
 
-    def __init__(self,MAIN_SURF):
+    def __init__(self):
 
         # http://usingpython.com/adding-an-inventory/
         # Sort out how to make walls block movement
@@ -17,8 +21,8 @@ class Map_Maker:
         WOOD = 4
         PENT = 5
 
-        HERO = pygame.image.load('sprites/Hero.png')
-        hero_pos = [0, 0]
+        # HERO = pygame.image.load('sprites/Hero.png')
+        # hero_pos = [0, 0]
 
         self.textures = {
             WALL: pygame.image.load('sprites/dung_wall_25px.png'),
@@ -28,7 +32,11 @@ class Map_Maker:
             WOOD: pygame.image.load('sprites/wood_25px.png'),
             PENT: pygame.image.load('sprites/penta_25px.png')
         }
-
+        # These variables comtrol the generation of rooms, how many, max and min size.
+        # TODO: Make these reactive to the level of the hero?
+        self.MAX_ROOMS = 15
+        self.min_ROOMSIZE = 3
+        self.max_ROOMSIZE = 8
 
         self.TILE_SIZE = 25
         self.MAP_WIDTH = 50
@@ -37,78 +45,88 @@ class Map_Maker:
         self.SCREEN_HEIGHT = 20
 
         self.resources = [WALL,WATER,DOOR,WOOD,HALL,PENT]
-        # Hard Coded for now, this will randomize poorly atm, but not check for
-        # rand_tile_map = [[random.choice(resources) for w in range(MAP_WIDTH)] for h in range(MAP_HEIGHT)]
-        self.rand_tile_map = [[HALL for w in range(self.MAP_WIDTH)] for h in range(self.MAP_HEIGHT)]
+        # TODO: make sure starter map is renamed throughout document
+        self.starter_map = [[WALL for w in range(self.MAP_WIDTH)] for h in range(self.MAP_HEIGHT)]
 
-        def modify_map_tiles(map_to_mod):
-            for rw in range(self.MAP_HEIGHT):
-                for cl in range(self.MAP_WIDTH):
-                    randNum = random.randint(0,30)
-                    if randNum == 0:
-                        tile = WATER
-                    elif randNum in range(1,6):
-                        tile = WALL
-                    elif randNum in range(7,18):
-                        tile = HALL
-                    elif randNum in range(19,22):
-                        tile = DOOR
-                    elif randNum == 30:
-                        tile = PENT
-                    else:
-                        tile = WOOD
-                    map_to_mod[rw][cl] = tile
+        # This places the rooms in the map, then checks each room against each other troom to make suyre it is not overlapping anotehr
+        def place_rooms_in_map():
+            all_rooms = []
 
-        modify_map_tiles(self.rand_tile_map)
-        print(self.rand_tile_map)
+            for r in range(self.MAX_ROOMS):
+                w = self.min_ROOMSIZE + random.randint(0, self.max_ROOMSIZE - self.min_ROOMSIZE + 1)
+                h = self.min_ROOMSIZE + random.randint(0, self.max_ROOMSIZE - self.min_ROOMSIZE + 1)
+                x_pos = random.randint(0, self.MAP_WIDTH - w - 1) + 1
+                y_pos = random.randint(0, self.MAP_HEIGHT - h - 1) + 1
+                this_room = pcd.Room(x_pos, y_pos, w, h)
+                check_fail = False
+                # check for overlapping rooms
+
+                for other_room in all_rooms:
+                    if this_room.intersects(other_room):
+                        check_fail = True
+                        break
+                if check_fail != True:
+                    # TODO: for room in all_rooms: replace the wall sections with one of two types of floor sections(WOOD, HALL)
+                    center = this_room.center
+                    if len(all_rooms) != 0:
+                        prev_center = all_rooms[len(all_rooms)-1].center
+                        if random.randint(1,2)==1:
+                            h_corridors(prev_center[0], center[0], prev_center[1])
+                            v_corridor(prev_center[1], center[1], prev_center[0])
+                        else:
+                            v_corridor(prev_center[1], center[1], prev_center[0])
+                            h_corridors(prev_center[0], center[0], prev_center[1])
+                if check_fail != True:
+                    all_rooms.append(this_room)
+            carve_all_rooms(all_rooms)
+
+            for row in self.starter_map:
+                print(row)
+
+        def carve_all_rooms(all_rooms):
+
+            for room in all_rooms:
+                wood_or_hall = random.randint(1,2)
+                if wood_or_hall == 1:
+                    tile_type = HALL
+                else:
+                    tile_type = WOOD
+                for row in range(room.height):
+                    for col in range(room.width):
+                        self.starter_map[room.x1+row][room.y1+col] = tile_type
+
+        '''MAKE SOME CORRIDORS'''
+        def h_corridors(x1,x2,y):
+            for x in range(min(x1,x2)+1,max(x1,x2)+1):
+                # Place a Hall Block in this cell.
+                self.starter_map[x][y] = HALL
+
+        def v_corridor(y1,y2,x):
+            for y in range(min(y1,y2)+1,max(y1,y2)+1):
+                # Place a hall in this location
+                self.starter_map[x][y] = HALL
 
 
+        # def modify_map_tiles(map_to_mod):
+        #     for rw in range(self.MAP_HEIGHT):
+        #         for cl in range(self.MAP_WIDTH):
+        #             randNum = random.randint(0,30)
+        #             if randNum == 0:
+        #                 tile = WATER
+        #             elif randNum in range(1,6):
+        #                 tile = WALL
+        #             elif randNum in range(7,18):
+        #                 tile = HALL
+        #             elif randNum in range(19,22):
+        #                 tile = DOOR
+        #             elif randNum == 30:
+        #                 tile = PENT
+        #             else:
+        #                 tile = WOOD
+        #             map_to_mod[rw][cl] = tile
+        place_rooms_in_map()
 
-        map_surface = pygame.display.set_mode((self.SCREEN_WIDTH*self.TILE_SIZE, self.SCREEN_HEIGHT*self.TILE_SIZE))
-        # def check_walls_near_hero(map, hero_pos):
 
-        while True:
-            # Listen for events, this is about to get a whole lot bigger
-            for event in pygame.event.get():
-                print(event)
-                if event.type == QUIT:
-                    pygame.quit()
-                    sys.exit
-                # THIS BLOCK TO BE SEPERTED INTO THE INPUT CONTROLLER
-
-                # TODO: write a check for walls method that constantly runs, and checks if the four surrounding blocks are walls
-                elif event.type == KEYDOWN:
-                    if(event.key == K_RIGHT) and hero_pos[0] < self.MAP_WIDTH-1 and hero_pos[0]+1 != WALL:
-                        hero_pos[0] += 1
-                    if (event.key == K_LEFT) and hero_pos[0] >= 1:
-                        hero_pos[0] -= 1
-                    if (event.key == K_UP) and hero_pos[1] >= 1:
-                        hero_pos[1] -= 1
-                    if (event.key == K_DOWN) and hero_pos[1] < self.MAP_HEIGHT-1:
-                        hero_pos[1] += 1
-                    if (event.key == K_a):
-            #             ATTACK!
-                        print('ATTACKING!')
-            # Rando gen the map
-            # MAIN_SURF = pygame.display.set_mode((MAP_WIDTH*TILE_SIZE, MAP_HEIGHT*TILE_SIZE))
-
-        def draw_map(self,screen,camera_x,camera_y):
-            for y in range(self.MAP_HEIGHT):
-                for x in range(self.MAP_WIDTH):
-                    tile_pos_x = (x*self.TILE_SIZE)-camera_x
-                    tile_pos_y = (y*self.TILE_SIZE)-camera_y
-                    if (onscreen(tile_pos_x,tile_pos_y)):
-                        map_surface[y][x].draw(screen,x*self.TILE_SIZE,y*self.TILE_SIZE)
-
-        def onscreen(x,y):
-            return not (x<self.TILE_SIZE or x>self.SCREEN_WIDTH or
-                        y<self.TILE_SIZE or y>self.SCREEN_HEIGHT)
-
-            # for row in range(MAP_HEIGHT):
-            #     for column in range(MAP_WIDTH):
-            #         MAIN_SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
-
-            # display the Hero
-        map_surface.blit(HERO,(hero_pos[0]*self.TILE_SIZE, hero_pos[1]*self.TILE_SIZE))
-        pygame.display.update()
-
+mm = Map_Maker
+mm()
+            # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
