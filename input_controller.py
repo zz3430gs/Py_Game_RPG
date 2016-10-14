@@ -22,7 +22,7 @@ class input_controller:
                 # THIS BLOCK TO BE SEPERTED INTO THE INPUT CONTROLLER
                 elif event.type == KEYDOWN:
                     if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1:
-                        hero_pos[0] += 1
+                        hero.hero_pos[0] += 1
                     if (event.key == K_LEFT) and hero_pos[0] >= 1:
                         hero_pos[0] -= 1
                     if (event.key == K_UP) and hero_pos[1] >= 1:

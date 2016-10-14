@@ -91,8 +91,10 @@ class Map_Maker:
                     tile_type = WOOD
                 for row in range(room.height):
                     for col in range(room.width):
-                        self.starter_map[room.x1 + row][room.y1 + col - 1] = tile_type
-
+                        try:
+                            self.starter_map[room.x1 + col][room.y1 + row] = tile_type
+                        except IndexError as e:
+                            print(e)
         '''MAKE SOME CORRIDORS'''
 
         def h_corridors(x1, x2, y):
