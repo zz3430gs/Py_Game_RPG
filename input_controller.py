@@ -7,6 +7,7 @@ from pygame.locals import *
 import map
 from characters.Hero import Hero
 
+
 class input_controller:
     def __init__(self):
         self.listener = self.key_listener()

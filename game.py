@@ -1,24 +1,36 @@
 import pygame, sys
 from pygame.locals import *
 from colors import *
-# import map
-import math
-from characters.Hero import Hero
-from characters.Monster import Monster
+from map import Map_Maker as MM
 from main_display import Main_Display as MD
 from input_controller import input_controller as IC
+import graphics_manager as GM
+
+
 
 def main():
     while True:
         # make the screen object
-        main_surf = MD()
+
+        md = MD()
+        mm = MM()
+        gm = GM.graphics_manager(md.base_surface)
+        ic = IC()
+        gm.update_game()
+        # once text manager is working...
+        # tm = TM()
+
         # initialize the pygame graphics module
         pygame.init()
-        main_surf.run_screen()
+
+
+        # main_display.keep_camera_focus
+        # main_display_render_hero
         # get our key listener
         # TODO: Listener is working, make it do stuff
         listener = IC()
         listener.key_listener()
+
         pygame.display.update()
 
 main()

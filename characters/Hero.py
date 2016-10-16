@@ -16,6 +16,8 @@ class Hero(Character):
         self.next_level = 100
         # todo: Someday have multiple sprites for the hero.
         self.image = 'sprites/Hero.png'
+        # hero position  x, y
+        self.hero_pos = (0, 0)
         '''self.killcount = 0'''
 
     # TODO: Add a kill Counter for additional Highscore info

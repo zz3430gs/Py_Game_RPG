@@ -17,11 +17,9 @@ class Main_Display:
     def __init__(self):
         self.window_width = 800
         self.window_height = 600
-
-    def run_screen(self):
-        pygame.init()
-        pygame.display.set_mode((self.window_width, self.window_height))
+        self.base_surface = pygame.display.set_mode((self.window_width, self.window_height))
         pygame.display.set_caption('Simple RPG')
+
     @staticmethod
     #     Running the game requires the text_manager, map_manager, game_manager, and input_contorller
 
@@ -61,8 +59,7 @@ class Main_Display:
     # fontObj = pygame.font.Font('freesansbold.ttf',12)
     # textSurfaceObj = fontObj.render('Hello World Text!', True, White, Black)
     # textRectObj = textSurfaceObj.get_rect()
-        base_font = pygame.font.Font('freesansbold.ttf', 12)
-        big_font = pygame.font.Font('freesansbold.ttf',14)
+
 
     def render_xp_bar(self,base_surf, hero):
         x_y_wid_hei_for_outline = (575, 180, 200, 10)
@@ -94,7 +91,7 @@ class Main_Display:
             length = 198
         return length
     '''------------------------ENDS STAT PAGE------------------------------'''
-
+    @staticmethod
     def render_basic_commands(base_surf):
         x_y_wid_hei =(550,200,250,200)
         commands = pygame.draw.rect(base_surf,Yellow,x_y_wid_hei)
@@ -119,6 +116,11 @@ class Main_Display:
         height = 500
         width = 550
 
+
+    @staticmethod
+    def render_all(surface):
+
+        print('all the rendering methods go right here!')
 
 
 # pygame.init()
