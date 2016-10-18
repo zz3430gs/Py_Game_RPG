@@ -2,9 +2,8 @@ import map
 import pygame
 import main_display
 
+
 class graphics_manager:
-
-
     # needs to know about the map instances, so it can call the maps methods for tiling sprites
     def __init__(self, base_surf):
         # This is the number of tiles the camera will be able to see on X-axis
@@ -50,9 +49,8 @@ class graphics_manager:
             HALL: pygame.image.load('sprites/dung_floor_25px.png'),
             PENT: pygame.image.load('sprites/penta_25px.png')
         }
-    # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
+        # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
         # TODO: Make camera following player METHOD(PASS CURRENT PLAYER X & Y)
-
 
     def make_possible_tiles_cam_can_see(self):
         # make an array of rows of cells, so it will be an array 20 arrays tall, each of those 22 rectangles wide.
@@ -67,7 +65,7 @@ class graphics_manager:
                 this_tile = pygame.Rect(insert_tile_start_x, insert_tile_start_y, 25, 25)
                 single_row.append(this_tile)
                 insert_tile_start_x += 25
-            #     append the row to the entirety
+            # append the row to the entirety
             visible_tiles.append(single_row)
             # reset variables
             single_row = []
@@ -79,8 +77,8 @@ class graphics_manager:
     def camera_chase_hero(self, hero_x, hero_y):
         # center based on cam_width
         # Never wander from the players position!!! NEVER!!
-        self.cam_loc_x = hero_x - int(self.cam_width/2.0)
-        self.cam_loc_y = hero_y - int(self.cam_height/2.0)
+        self.cam_loc_x = hero_x - int(self.cam_width / 2.0)
+        self.cam_loc_y = hero_y - int(self.cam_height / 2.0)
         # if the camera has wandered off to center
         if self.cam_loc_x < 0:
             # get it in line
@@ -89,7 +87,7 @@ class graphics_manager:
             self.cam_loc_x = self.cam_max_pan_x
         if self.cam_loc_y < 0:
             self.cam_loc_y = 0
-        elif self.cam_loc_y>self.cam_max_pan_y:
+        elif self.cam_loc_y > self.cam_max_pan_y:
             self.cam_loc_y = 0
 
     def legal_camera_move(self, hero):
@@ -98,47 +96,46 @@ class graphics_manager:
         # pan up, or not
         if y == (self.cam_loc_y + self.cam_move_up) and self.cam_loc_y > 0:
             self.cam_loc_y -= 1
-    #     pan down or not
+            #     pan down or not
         elif y == (self.cam_loc_y + self.cam_move_dn) and self.cam_loc_y < self.cam_max_pan_y:
             self.cam_loc_y += 1
-    #     pan right or not
+            #     pan right or not
         elif x == (self.cam_loc_x + self.cam_move_rt) and self.cam_loc_x < self.cam_max_pan_x:
             self.cam_loc_x += 1
         elif x == (self.cam_loc_x + self.cam_move_lft) and self.cam_loc_x > 0:
             self.cam_loc_x -= 1
 
-
     def update_game(self):
-    #     call text_manager updater here too
-    # # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
-    # this should render only tiles that are in the camers view
+        #     call text_manager updater here too
+        # # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
+        # this should render only tiles that are in the camers view
         for col in range(self.cam_height):
             for row in range(self.cam_width):
                 x, y = self.visible_tiles[row][col].topleft
                 # IF IT IS A WALL
-                if self.MM.starter_map[row+self.cam_loc_y][col+self.cam_loc_x] == self.MM.resources[0]:
+                if self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[0]:
                     # found a wall tile
                     self.base_surf.blit(self.textures[0], (x, y))
-                elif self.MM.starter_map[row+self.cam_loc_y][col+self.cam_loc_x] == self.MM.resources[1]:
+                elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[1]:
                     # found a hall tile
                     self.base_surf.blit(self.textures[1], (x, y))
-                elif self.MM.starter_map[row+self.cam_loc_y][col+self.cam_loc_x] == self.MM.resources[2]:
+                elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[2]:
                     # found a door
-                    self.base_surf.blit(self.textures[2], (x,y))
+                    self.base_surf.blit(self.textures[2], (x, y))
                 elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[3]:
                     # if it is water tile
-                    self.base_surf.blit(self.textures[3],(x,y))
+                    self.base_surf.blit(self.textures[3], (x, y))
                 elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[4]:
                     # If it is wood
-                    self.base_surf.blit(self.textures[4],(x,y))
+                    self.base_surf.blit(self.textures[4], (x, y))
                 elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[5]:
-                    self.base_surf.blit(self.textures[5], (x,y))
+                    self.base_surf.blit(self.textures[5], (x, y))
                     # self.mainSurface.blit(self.sprite_door_open, (x, y))
                     # this way didn't work. Trying others now.
                     # self.base_surf.blit(self.textures[self.MM.starter_map[x][y]], (col*self.MM.TILE_SIZE, row*self.MM.TILE_SIZE))
-    #             draw gameboard
+                    #             draw gameboard
         pygame.display.update()
+
     @staticmethod
     def render_hero(hero):
         print('blit hero here')
-

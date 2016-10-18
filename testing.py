@@ -3,7 +3,9 @@ import pygame
 
 
 # THIS IS HOW I FOUND A FONT TO USE
-# fonts = pygame.font.get_fonts()
-# for font in fonts:
-#     if 'ber' in font:
-#         print(font)
+fonts = pygame.font.get_fonts()
+for font in fonts:
+    if 'ber' in font:
+        print(font)
+
+print(pygame.font.match_font('berlinsansfbdemi'))

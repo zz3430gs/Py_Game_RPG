@@ -8,7 +8,6 @@ import graphics_manager as GM
 from text_manager import Text_Manager as TM
 
 
-
 def main():
     while True:
         # make the screen object
@@ -33,6 +32,7 @@ def main():
         # TODO: Listener is working, make it do stuff
 
         pygame.display.update()
+
 
 main()
 # hero = {'xp': 330,

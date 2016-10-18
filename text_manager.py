@@ -2,7 +2,6 @@ import pygame
 
 
 class Text_Manager:
-
     STAT_BOX_COL_X = 52
     STAT_BOX_COL_Y = 2
 
@@ -17,12 +16,13 @@ class Text_Manager:
         # statPageConstants
         self.RIGHT_MENU_GRID_WIDTH = 80
         self.RIGHT_MENU_GRID_HEIGHT = 30
-        # FONT STUFF
-        self.FONT_NAME = 'berlinsansfbdemi'
+        # Font found via print(pygame.font.match_font('berlinsansfbdemi'))
+        self.FONT_NAME = 'C:\Windows\Fonts\BRLNSDB.TTF'
         self.LARGE_FONT_SIZE = 20
         self.small_FONT_SIZE = 12
         # self.base_surf = base_surf
         # For most Character stuff
+
         self.LARGE_FONT = pygame.font.Font(self.FONT_NAME, self.LARGE_FONT_SIZE)
         # font size is returned as a list of two values
         self.LARGE_FONT_WIDTH = self.LARGE_FONT.size(' ')[0]
@@ -37,15 +37,15 @@ class Text_Manager:
         # THESSE ARE THE LINES OF TEXT THAT WILL SHOW UP IN THE BATTLE_BOX
         self.battle_box_lines = []
 
-    # THIS METHOD ACTUALLY BLITS TEXT ONTO THE GAME SURFACE
+    # THIS METHOD ACTUALLY CREATES TEXT TO BE BLITTED ONTO THE GAME SURFACE VIA add_text()
     # def update(self):
     #
     #
     # this method takes the string of text, the color, and two positional arguments, finally a large or small boolean
-    def add_text(self, t, color, col_x, col_y,size_bool):
+    def add_text(self, t, color, col_x, col_y, size_bool):
         if size_bool == True:
-            the_text = self.LARGE_FONT.render(t,True, color)
-            self.main_text_area.blit(the_text, (col_x*self.LARGE_FONT_WIDTH, col_y*self.LARGE_FONT_HEIGHT))
+            the_text = self.LARGE_FONT.render(t, True, color)
+            self.main_text_area.blit(the_text, (col_x * self.LARGE_FONT_WIDTH, col_y * self.LARGE_FONT_HEIGHT))
             # print('This is large text')
         elif size_bool == False:
             the_text = self.SMALL_FONT.render(t, True, color)

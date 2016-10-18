@@ -46,7 +46,7 @@ class Map_Maker:
         for row in self.starter_map:
             print(row)
 
-        # This places the rooms in the map, then checks each room against each other troom to make suyre it is not overlapping anotehr
+            # This places the rooms in the map, then checks each room against each other troom to make suyre it is not overlapping anotehr
 
     def place_rooms_in_map(self):
 
@@ -80,11 +80,10 @@ class Map_Maker:
                 all_rooms.append(this_room)
                 self.carve_all_rooms(all_rooms)
 
-        # for row in self.starter_map:
-        #     print(row)
+                # for row in self.starter_map:
+                #     print(row)
 
-
-    def carve_all_rooms(self,all_rooms):
+    def carve_all_rooms(self, all_rooms):
 
         for room in all_rooms:
             wood_or_hall = random.randint(1, 2)
@@ -98,6 +97,7 @@ class Map_Maker:
                         self.starter_map[room.x1 + col][room.y1 + row] = tile_type
                     except IndexError as e:
                         print(e)
+
     '''MAKE SOME CORRIDORS'''
 
     def h_corridors(self, x1, x2, y):
@@ -105,28 +105,28 @@ class Map_Maker:
             # Place a Hall Block in this cell.
             self.starter_map[x][y] = self.resources[4]
 
-    def v_corridor(self,y1, y2, x):
+    def v_corridor(self, y1, y2, x):
         for y in range(min(y1, 2) + 1, max(y1, y2) + 1):
             # Place a hall in this location
             self.starter_map[x][y] = self.resources[4]
 
-    def is_valid_move(self,x ,y ,hero):
+    def is_valid_move(self, x, y, hero):
 
         result = True
         # if the move is above or below the x or y axis then no move allowed
         if x < 0 or y < 0:
             result = False
         # if the move is beyond the map boudaries
-        elif x > self.MAP_WIDTH-1 or y > self.MAP_WIDTH-1:
+        elif x > self.MAP_WIDTH - 1 or y > self.MAP_WIDTH - 1:
             result = False
         # since it must be on the map somewhere, lets check what tile it is trying to go onto
         else:
-        #     if the map square isn't in the following list of things then no go
-        # TODO: add ITEM, KEY, and EXIT, and OPEN_DOOR (ADD THEM TO THE GENERATOR AS WELL AS SPRITES)
+            #     if the map square isn't in the following list of things then no go
+            # TODO: add ITEM, KEY, and EXIT, and OPEN_DOOR (ADD THEM TO THE GENERATOR AS WELL AS SPRITES)
             if self.starter_map[x][y] != self.resources[1] and \
-                self.starter_map[x][y] != self.resources[2] and \
-                self.starter_map[x][y] != self.resources[3] and \
-                self.starter_map[x][y] != self.resources[4]:
+                            self.starter_map[x][y] != self.resources[2] and \
+                            self.starter_map[x][y] != self.resources[3] and \
+                            self.starter_map[x][y] != self.resources[4]:
                 result = False
         return result
 
