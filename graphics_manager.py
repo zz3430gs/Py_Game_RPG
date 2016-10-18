@@ -9,9 +9,9 @@ class graphics_manager:
     def __init__(self, base_surf):
         # This is the number of tiles the camera will be able to see on X-axis
         self.base_surf = base_surf
-        self.cam_width = 22
+        self.cam_width = 20
         # This is the number of tiles the camera will be able to see on Y-axis
-        self.cam_height = 20
+        self.cam_height = 22
         # self.starter_map = starter_map
         # Camera move speeds in different directions in pixels
         self.cam_move_up = 1
@@ -36,25 +36,25 @@ class graphics_manager:
         self.cam_loc_y = 0
 
         WALL = 0
-        HALL = 1
+        WATER = 1
         DOOR = 2
-        WATER = 3
-        WOOD = 4
+        WOOD = 3
+        HALL = 4
         PENT = 5
 
         self.textures = {
             WALL: pygame.image.load('sprites/dung_wall_25px.png'),
-            HALL: pygame.image.load('sprites/dung_floor_25px.png'),
-            DOOR: pygame.image.load('sprites/door_25px.png'),
             WATER: pygame.image.load('sprites/water_25px.png'),
+            DOOR: pygame.image.load('sprites/door_25px.png'),
             WOOD: pygame.image.load('sprites/wood_25px.png'),
+            HALL: pygame.image.load('sprites/dung_floor_25px.png'),
             PENT: pygame.image.load('sprites/penta_25px.png')
         }
     # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
         # TODO: Make camera following player METHOD(PASS CURRENT PLAYER X & Y)
 
-    @staticmethod
-    def make_possible_tiles_cam_can_see():
+
+    def make_possible_tiles_cam_can_see(self):
         # make an array of rows of cells, so it will be an array 20 arrays tall, each of those 22 rectangles wide.
         # these rectangles will be the things that get blitted over by the sprites of world bits
         visible_tiles = []
@@ -62,8 +62,8 @@ class graphics_manager:
         # this offsets the tiles by 10 pixels from top and left
         insert_tile_start_x = 10
         insert_tile_start_y = 10
-        for row in range(22):
-            for column in range(20):
+        for row in range(self.cam_width):
+            for column in range(self.cam_height):
                 this_tile = pygame.Rect(insert_tile_start_x, insert_tile_start_y, 25, 25)
                 single_row.append(this_tile)
                 insert_tile_start_x += 25
@@ -112,13 +112,30 @@ class graphics_manager:
     #     call text_manager updater here too
     # # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
     # this should render only tiles that are in the camers view
-        for row in range(self.cam_height):
-            for col in range(self.cam_width):
-                x,y = self.visible_tiles[row][col].topleft
+        for col in range(self.cam_height):
+            for row in range(self.cam_width):
+                x, y = self.visible_tiles[row][col].topleft
                 # IF IT IS A WALL
-                # if self.MM.starter_map[row+self.cam_loc_y][col+self.cam_loc_x]==self.MM.resources[0]:
-                # this way didn't work. Trying others now.
-                # self.base_surf.blit(self.textures[self.MM.starter_map[x][y]], (col*self.MM.TILE_SIZE, row*self.MM.TILE_SIZE))
+                if self.MM.starter_map[row+self.cam_loc_y][col+self.cam_loc_x] == self.MM.resources[0]:
+                    # found a wall tile
+                    self.base_surf.blit(self.textures[0], (x, y))
+                elif self.MM.starter_map[row+self.cam_loc_y][col+self.cam_loc_x] == self.MM.resources[1]:
+                    # found a hall tile
+                    self.base_surf.blit(self.textures[1], (x, y))
+                elif self.MM.starter_map[row+self.cam_loc_y][col+self.cam_loc_x] == self.MM.resources[2]:
+                    # found a door
+                    self.base_surf.blit(self.textures[2], (x,y))
+                elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[3]:
+                    # if it is water tile
+                    self.base_surf.blit(self.textures[3],(x,y))
+                elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[4]:
+                    # If it is wood
+                    self.base_surf.blit(self.textures[4],(x,y))
+                elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[5]:
+                    self.base_surf.blit(self.textures[5], (x,y))
+                    # self.mainSurface.blit(self.sprite_door_open, (x, y))
+                    # this way didn't work. Trying others now.
+                    # self.base_surf.blit(self.textures[self.MM.starter_map[x][y]], (col*self.MM.TILE_SIZE, row*self.MM.TILE_SIZE))
     #             draw gameboard
         pygame.display.update()
     @staticmethod

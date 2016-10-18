@@ -13,10 +13,10 @@ class Map_Maker:
         # http://usingpython.com/adding-an-inventory/
         # Sort out how to make walls block movement
         WALL = 0
-        HALL = 1
+        WATER = 1
         DOOR = 2
-        WATER = 3
-        WOOD = 4
+        WOOD = 3
+        HALL = 4
         PENT = 5
 
         # HERO = pygame.image.load('sprites/Hero.png')
@@ -24,16 +24,21 @@ class Map_Maker:
 
         # These variables comtrol the generation of rooms, how many, max and min size.
         # TODO: Make these reactive to the level of the hero?
-        self.MAX_ROOMS = 20
+        self.MAX_ROOMS = 25
         self.min_ROOMSIZE = 3
         self.max_ROOMSIZE = 8
 
         self.TILE_SIZE = 25
         self.MAP_WIDTH = 51
         self.MAP_HEIGHT = 51
-        self.SCREEN_WIDTH = 22
+        self.SCREEN_WIDTH = 20
         self.SCREEN_HEIGHT = 20
-
+        # WALL = 0
+        # WATER = 1
+        # DOOR = 2
+        # WOOD = 3
+        # HALL = 4
+        # PENT = 5
         self.resources = [WALL, WATER, DOOR, WOOD, HALL, PENT]
         '''The Map is being made and modified byt these two lines'''
         self.starter_map = [[self.resources[0] for w in range(self.MAP_WIDTH)] for h in range(self.MAP_HEIGHT)]
@@ -95,7 +100,7 @@ class Map_Maker:
                         print(e)
     '''MAKE SOME CORRIDORS'''
 
-    def h_corridors(self,x1, x2, y):
+    def h_corridors(self, x1, x2, y):
         for x in range(min(x1, x2) + 1, max(x1, x2) + 1):
             # Place a Hall Block in this cell.
             self.starter_map[x][y] = self.resources[4]
@@ -104,6 +109,26 @@ class Map_Maker:
         for y in range(min(y1, 2) + 1, max(y1, y2) + 1):
             # Place a hall in this location
             self.starter_map[x][y] = self.resources[4]
+
+    def is_valid_move(self,x ,y ,hero):
+
+        result = True
+        # if the move is above or below the x or y axis then no move allowed
+        if x < 0 or y < 0:
+            result = False
+        # if the move is beyond the map boudaries
+        elif x > self.MAP_WIDTH-1 or y > self.MAP_WIDTH-1:
+            result = False
+        # since it must be on the map somewhere, lets check what tile it is trying to go onto
+        else:
+        #     if the map square isn't in the following list of things then no go
+        # TODO: add ITEM, KEY, and EXIT, and OPEN_DOOR (ADD THEM TO THE GENERATOR AS WELL AS SPRITES)
+            if self.starter_map[x][y] != self.resources[1] and \
+                self.starter_map[x][y] != self.resources[2] and \
+                self.starter_map[x][y] != self.resources[3] and \
+                self.starter_map[x][y] != self.resources[4]:
+                result = False
+        return result
 
         # def modify_map_tiles(map_to_mod):
         #     for rw in range(self.MAP_HEIGHT):

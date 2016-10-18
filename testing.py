@@ -1,7 +1,9 @@
-# import main_display
-import math
-xp = 1199
-next_lvl = 1200
+import pygame
 
 
 
+# THIS IS HOW I FOUND A FONT TO USE
+# fonts = pygame.font.get_fonts()
+# for font in fonts:
+#     if 'ber' in font:
+#         print(font)

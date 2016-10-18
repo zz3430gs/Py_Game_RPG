@@ -5,31 +5,32 @@ from map import Map_Maker as MM
 from main_display import Main_Display as MD
 from input_controller import input_controller as IC
 import graphics_manager as GM
+from text_manager import Text_Manager as TM
 
 
 
 def main():
     while True:
         # make the screen object
-
+        pygame.init()
         md = MD()
         mm = MM()
         gm = GM.graphics_manager(md.base_surface)
-        ic = IC()
+        tm = TM(md.base_surface)
         gm.update_game()
+        ic = IC()
+
         # once text manager is working...
         # tm = TM()
 
         # initialize the pygame graphics module
-        pygame.init()
+
 
 
         # main_display.keep_camera_focus
         # main_display_render_hero
         # get our key listener
         # TODO: Listener is working, make it do stuff
-        listener = IC()
-        listener.key_listener()
 
         pygame.display.update()
 
