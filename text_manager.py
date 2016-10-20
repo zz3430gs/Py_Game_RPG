@@ -1,5 +1,5 @@
 import pygame
-
+import colors as C
 
 class Text_Manager:
     STAT_BOX_COL_X = 52
@@ -11,7 +11,7 @@ class Text_Manager:
     BLINK_SPEED_ON = 30
     BLINK_SPEED_OFF = 5
 
-    def __init__(self, base_surf):
+    def __init__(self, base_surf, hero):
 
         # statPageConstants
         self.RIGHT_MENU_GRID_WIDTH = 80
@@ -22,7 +22,7 @@ class Text_Manager:
         self.small_FONT_SIZE = 12
         # self.base_surf = base_surf
         # For most Character stuff
-
+        self.hero = hero
         self.LARGE_FONT = pygame.font.Font(self.FONT_NAME, self.LARGE_FONT_SIZE)
         # font size is returned as a list of two values
         self.LARGE_FONT_WIDTH = self.LARGE_FONT.size(' ')[0]
@@ -38,9 +38,9 @@ class Text_Manager:
         self.battle_box_lines = []
 
     # THIS METHOD ACTUALLY CREATES TEXT TO BE BLITTED ONTO THE GAME SURFACE VIA add_text()
-    # def update(self):
-    #
-    #
+    def update(self):
+        self.add_text(self.hero.name,C.Red, self.STAT_BOX_COL_X+5, self.STAT_BOX_COL_Y+5, True)
+
     # this method takes the string of text, the color, and two positional arguments, finally a large or small boolean
     def add_text(self, t, color, col_x, col_y, size_bool):
         if size_bool == True:

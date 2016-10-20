@@ -112,8 +112,8 @@ class graphics_manager:
         #     call text_manager updater here too
         # # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
         # this should render only tiles that are in the camers view
-        for col in range(self.cam_height):
-            for row in range(self.cam_width):
+        for row in range(self.cam_height):
+            for col in range(self.cam_width):
                 y, x = self.visible_tiles[col][row].topleft
                 # if the hero is there render it
                 # if self.MM.starter_map[row + self.cam_loc_y][col+self.cam_loc_x] == self.Hero.hero_pos:
@@ -121,22 +121,22 @@ class graphics_manager:
                 #     self.MM.starter_map[col + self.cam_loc_x] == self.Hero.hero_pos[1]:
                 # IF IT IS A WALL
                 try:
-                    if self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[0]:
+                    if self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[0]:
                         # found a wall tile
                         self.base_surf.blit(self.textures[0], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[1]:
+                    elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[1]:
                         # found a hall tile
                         self.base_surf.blit(self.textures[1], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[2]:
+                    elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[2]:
                         # found a door
                         self.base_surf.blit(self.textures[2], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[3]:
+                    elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x]== self.MM.resources[3]:
                         # if it is water tile
                         self.base_surf.blit(self.textures[3], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[4]:
+                    elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[4]:
                         # If it is wood
                         self.base_surf.blit(self.textures[4], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[5]:
+                    elif self.MM.starter_map[row + self.cam_loc_y][col + self.cam_loc_x] == self.MM.resources[5]:
                         self.base_surf.blit(self.textures[5], (x, y))
                 except IndexError as e:
                     print(e)
