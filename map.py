@@ -5,7 +5,7 @@ import colors
 import sys
 from pygame.locals import *
 import pcdungeon as pcd
-
+# TODO: place water, pent, and doors during generations. CHOOSE HERO START LOCATION
 
 class Map_Maker:
     def __init__(self):
@@ -33,6 +33,7 @@ class Map_Maker:
         self.MAP_HEIGHT = 51
         self.SCREEN_WIDTH = 20
         self.SCREEN_HEIGHT = 20
+        self.hero_start = [0, 0]
         # WALL = 0
         # WATER = 1
         # DOOR = 2
@@ -66,7 +67,6 @@ class Map_Maker:
                     check_fail = True
                     break
             if check_fail != True:
-                # TODO: for room in all_rooms: replace the wall sections with one of two types of floor sections(WOOD, HALL)
                 center = this_room.center
                 if len(all_rooms) != 0:
                     prev_center = all_rooms[len(all_rooms) - 1].center
@@ -78,10 +78,16 @@ class Map_Maker:
                         self.h_corridors(prev_center[0], center[0], prev_center[1])
             if check_fail != True:
                 all_rooms.append(this_room)
-                self.carve_all_rooms(all_rooms)
+
+        self.center = self.place_hero_start(all_rooms)
+        self.carve_all_rooms(all_rooms)
 
                 # for row in self.starter_map:
                 #     print(row)
+    def place_hero_start(self, all_rooms):
+        # TODO: Make this much Better at placing the hero. Look Through the  map, find a coordinate that is a floor section. then place
+        # THIS IS A REALLY HACKY WAY OF DOING THIS WHICH WORKS ONLY ABOUT 30% of the time.
+        self.hero_start = [all_rooms[0].center[0],all_rooms[0].center[1]]
 
     def carve_all_rooms(self, all_rooms):
 

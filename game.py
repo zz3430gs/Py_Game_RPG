@@ -6,6 +6,7 @@ from main_display import Main_Display as MD
 from input_controller import input_controller as IC
 import graphics_manager as GM
 from text_manager import Text_Manager as TM
+from characters.Hero import Hero
 
 
 def main():
@@ -14,10 +15,13 @@ def main():
         pygame.init()
         md = MD()
         mm = MM()
-        gm = GM.graphics_manager(md.base_surface)
+        # instantiate hero
+        # TODO: Make this a DB lookup or a new Game
+        hero = Hero('Grognak', mm.hero_start)
+        gm = GM.graphics_manager(md.base_surface, hero)
         tm = TM(md.base_surface)
         gm.update_game()
-        ic = IC()
+        ic = IC(gm, hero)
 
         # once text manager is working...
         # tm = TM()

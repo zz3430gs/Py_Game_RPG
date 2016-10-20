@@ -3,11 +3,13 @@ from characters import data
 
 
 class Hero(Character):
-    def __init__(self, name):
+    def __init__(self, name, start_pos):
+        # TODO: Make the name max 16 characters
         super().__init__(name)
         # in the future a additional Class class will grant further inheritence
         # Which will make many of these happen there, not here.
-        self.state = 'normal'
+        self.states = ['explore', 'combat', 'game_over', 'inventory', 'level_up', 'new_game']
+        self.state = self.states[0]
         self.armor = 1  # Used to figure out if you missed
         self.strength = 3  # Used for the max on damage
         self.xp = 0
@@ -15,9 +17,9 @@ class Hero(Character):
         self.money = 5
         self.next_level = 100
         # todo: Someday have multiple sprites for the hero.
-        self.image = 'sprites/Hero.png'
+        # self.image = 'sprites/Hero.png'
         # hero position  x, y
-        self.hero_pos = (0, 0)
+        self.hero_pos = [start_pos[0],start_pos[1]]
         '''self.killcount = 0'''
 
     # TODO: Add a kill Counter for additional Highscore info

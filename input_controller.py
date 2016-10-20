@@ -9,10 +9,11 @@ from characters.Hero import Hero
 
 
 class input_controller:
-    def __init__(self):
-        self.listener = self.key_listener()
+    def __init__(self, gm, hero):
+        self.key_listener(gm, hero)
+        # self.hero = hero
 
-    def key_listener(self):
+    def key_listener(self, gm, hero):
         while True:
             # Listen for events, this is about to get a whole lot bigger
             for event in pygame.event.get():
@@ -22,17 +23,20 @@ class input_controller:
                     sys.exit
                 # THIS BLOCK TO BE SEPERTED INTO THE INPUT CONTROLLER
                 elif event.type == KEYDOWN:
-                    if(event.key == K_RIGHT) and hero_pos[0] < MAP_WIDTH-1:
+                    # THIS APPEARS TO BE WORKING.  ONLY APPEARS TO BE THOUGH SINCE I DONT HAVE THE CAMERA TRACKING WORKING
+                    if(event.key == K_RIGHT) and gm.MM.is_valid_move(hero.hero_pos[0]+1, hero.hero_pos[1], hero):
                         hero.hero_pos[0] += 1
-                    if (event.key == K_LEFT) and hero_pos[0] >= 1:
-                        hero_pos[0] -= 1
-                    if (event.key == K_UP) and hero_pos[1] >= 1:
-                        hero_pos[1] -= 1
-                    if (event.key == K_DOWN) and hero_pos[1] < MAP_HEIGHT-1:
-                        hero_pos[1] += 1
+                    if (event.key == K_LEFT) and gm.MM.is_valid_move(hero.hero_pos[0]-1, hero.hero_pos[1], hero):
+                        hero.hero_pos[0] -= 1
+                    if (event.key == K_UP) and gm.MM.is_valid_move(hero.hero_pos[0], hero.hero_pos[1]-1, hero):
+                        hero.hero_pos[1] -= 1
+                    if (event.key == K_DOWN) and gm.MM.is_valid_move(hero.hero_pos[0], hero.hero_pos[1]+1, hero):
+                        hero.hero_pos[1] += 1
                     if (event.key == K_a):
             #             ATTACK!
                         print('ATTACKING!')
+                    gm.camera_chase_hero(hero.hero_pos[0], hero.hero_pos[1])
+                    gm.update_game()
 
     # def is_valid_move(self,x,y,map):
     #     if map[y][x]!=
