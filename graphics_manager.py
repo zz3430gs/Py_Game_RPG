@@ -112,40 +112,42 @@ class graphics_manager:
         #     call text_manager updater here too
         # # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
         # this should render only tiles that are in the camers view
-        for row in range(self.cam_height):
-            for col in range(self.cam_width):
-                y, x = self.visible_tiles[col][row].topleft
-                # if the hero is there render it
-                # if self.MM.starter_map[row + self.cam_loc_y][col+self.cam_loc_x] == self.Hero.hero_pos:
-                # if self.MM.starter_map[row + self.cam_loc_y] == self.Hero.hero_pos[0] and \
-                #     self.MM.starter_map[col + self.cam_loc_x] == self.Hero.hero_pos[1]:
-                # IF IT IS A WALL
-                try:
-                    if self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[0]:
-                        # found a wall tile
-                        self.base_surf.blit(self.textures[0], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[1]:
-                        # found a hall tile
-                        self.base_surf.blit(self.textures[1], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[2]:
-                        # found a door
-                        self.base_surf.blit(self.textures[2], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[3]:
-                        # if it is water tile
-                        self.base_surf.blit(self.textures[3], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[4]:
-                        # If it is wood
-                        self.base_surf.blit(self.textures[4], (x, y))
-                    elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[5]:
-                        self.base_surf.blit(self.textures[5], (x, y))
-                except IndexError as e:
-                    print(e)
+        # if the hero is exploring render the exploration map
+        if self.Hero.state =='explore':
+            for row in range(self.cam_height):
+                for col in range(self.cam_width):
+                    y, x = self.visible_tiles[col][row].topleft
+                    # if the hero is there render it
+                    # if self.MM.starter_map[row + self.cam_loc_y][col+self.cam_loc_x] == self.Hero.hero_pos:
+                    # if self.MM.starter_map[row + self.cam_loc_y] == self.Hero.hero_pos[0] and \
+                    #     self.MM.starter_map[col + self.cam_loc_x] == self.Hero.hero_pos[1]:
+                    # IF IT IS A WALL
+                    try:
+                        if self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[0]:
+                            # found a wall tile
+                            self.base_surf.blit(self.textures[0], (x, y))
+                        elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[1]:
+                            # found a hall tile
+                            self.base_surf.blit(self.textures[1], (x, y))
+                        elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[2]:
+                            # found a door
+                            self.base_surf.blit(self.textures[2], (x, y))
+                        elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[3]:
+                            # if it is water tile
+                            self.base_surf.blit(self.textures[3], (x, y))
+                        elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[4]:
+                            # If it is wood
+                            self.base_surf.blit(self.textures[4], (x, y))
+                        elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[5]:
+                            self.base_surf.blit(self.textures[5], (x, y))
+                    except IndexError as e:
+                        print(e)
 
-                ex = row+self.cam_loc_y
-                why = col+self.cam_loc_x
-                if ex == self.Hero.hero_pos[1] and why == self.Hero.hero_pos[0]:
-                    # print('this is ex: '+ex+', this is why: '+why+', this is row:'+row+', this is col:'+col+',hero_pos[0]'+self.Hero.hero_pos[0]+'hero_pos[1]:',self.Hero.hero_pos[1])
-                    self.base_surf.blit(self.hero_image, (x, y))
+                    ex = row+self.cam_loc_y
+                    why = col+self.cam_loc_x
+                    if ex == self.Hero.hero_pos[1] and why == self.Hero.hero_pos[0]:
+                        # print('this is ex: '+ex+', this is why: '+why+', this is row:'+row+', this is col:'+col+',hero_pos[0]'+self.Hero.hero_pos[0]+'hero_pos[1]:',self.Hero.hero_pos[1])
+                        self.base_surf.blit(self.hero_image, (x, y))
                 # self.base_surf.blit(self.hero_image, ((self.Hero.hero_pos[0]*25)+10, (self.Hero.hero_pos[1]+10)))
                     # self.mainSurface.blit(self.sprite_door_open, (x, y))
                     # this way didn't work. Trying others now.

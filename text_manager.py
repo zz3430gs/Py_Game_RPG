@@ -36,7 +36,7 @@ class Text_Manager:
         self.base_surf = base_surf
         self.text_rect = pygame.Rect(550, 0, 250, 600)
         self.main_text_surface = pygame.Surface((280, 600))
-        self.main_text_surface.fill(C.Blue)
+        # self.main_text_surface.fill(C.Blue)
 
         # THESSE ARE THE LINES OF TEXT THAT WILL SHOW UP IN THE BATTLE_BOX
         self.battle_box_lines = []
@@ -45,20 +45,27 @@ class Text_Manager:
     def update(self):
         # self.add_text(self.hero.name, C.Red, 400, 400, True)
         # display hero name
-        self.add_text(self.hero.name, C.Red, self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y, True)
+        '''RENDER THE HEROES STATS'''
+        self.add_text(self.hero.name, C.Red, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y, True)
+
         # Hero level: Small Font
         self.add_text('Level: '+str(self.hero.level), C.Red, self.STAT_BOX_COL_X-20, self.STAT_BOX_COL_Y+2, False)
         # str, then armor
+
         self.add_text('Strength: ' + str(self.hero.strength), C.Red, self.STAT_BOX_COL_X + 5, self.STAT_BOX_COL_Y + 2, False)
         self.add_text('Armor:    ' + str(self.hero.armor), C.Red, self.STAT_BOX_COL_X + 5, self.STAT_BOX_COL_Y + 3, False)
-        # HP TEXT Numbers
+
+        # HP & XP TEXT Numbers
         self.add_text('Health: '+str(self.hero.current_hp)+'/'+str(self.hero.max_hp), C.White, self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y+5, False)
-        self.add_text('Health: ' + str(self.hero.xp) + '/' + str(self.hero.next_level), C.White, self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y + 7, False)
+        self.add_text('Experience: ' + str(self.hero.xp) + '/' + str(self.hero.next_level), C.White, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y + 7, False)
         # After all Text is added, then blit to main surf
         self.base_surf.blit(self.main_text_surface, (520, 0))
+
         # then render the XP and HP bars
         self.render_hp_bar(self.base_surf, self.hero)
+        self.render_xp_bar(self.base_surf,self.hero)
         pygame.display.update(self.text_rect)
+
     # this method takes the string of text, the color, and two positional arguments, finally a large or small boolean
     def add_text(self, t, color, col_x, col_y, size_bool):
         if size_bool == True:
@@ -73,9 +80,9 @@ class Text_Manager:
     '''THIS IS WHERE THE XP_BAR and HP_BAR have been moved to.  Not ideal but only way I was able to figure it out.'''
 
     def render_xp_bar(self, base_surf, hero):
-        x_y_wid_hei_for_outline = (575, 180, 200, 10)
-        fill_width = self.determine_xp_bar(hero.xp, hero.next_lvl)
-        x_y_wid_hei_for_fill = (576, 181, fill_width, 8)
+        x_y_wid_hei_for_outline = (578, 110, 200, 10)
+        fill_width = self.determine_xp_bar(hero.xp, hero.next_level)
+        x_y_wid_hei_for_fill = (579, 111, fill_width, 8)
         empty_bar = pygame.draw.rect(base_surf, C.White, x_y_wid_hei_for_outline, 1)
         fill_bar = pygame.draw.rect(base_surf, C.Green, x_y_wid_hei_for_fill)
 
@@ -87,9 +94,9 @@ class Text_Manager:
         return bar_width
 
     def render_hp_bar(self, base_surf, hero):
-        x_y_wid_hei_for_outline = (578, 76, 200, 12)
+        x_y_wid_hei_for_outline = (578, 75, 200, 12)
         fill_width = self.determine_hp_bar(hero.current_hp, hero.max_hp)
-        x_y_wid_hei_for_fill = (579, 77, fill_width, 10)
+        x_y_wid_hei_for_fill = (579, 76, fill_width, 10)
         empty_bar = pygame.draw.rect(base_surf, C.White, x_y_wid_hei_for_outline, 1)
         fill_bar = pygame.draw.rect(base_surf, C.Red, x_y_wid_hei_for_fill)
 
