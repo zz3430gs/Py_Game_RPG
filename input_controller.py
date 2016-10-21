@@ -9,11 +9,11 @@ from characters.Hero import Hero
 
 
 class input_controller:
-    def __init__(self, gm, hero):
-        self.key_listener(gm, hero)
+    def __init__(self, gm,tm, hero):
+        self.key_listener(gm,tm, hero)
         # self.hero = hero
 
-    def key_listener(self, gm, hero):
+    def key_listener(self, gm,tm, hero):
         while True:
             # Listen for events, this is about to get a whole lot bigger
             for event in pygame.event.get():
@@ -37,6 +37,8 @@ class input_controller:
                         print('ATTACKING!')
                     gm.camera_chase_hero(hero.hero_pos[0], hero.hero_pos[1])
                     gm.update_game()
+                    tm.update()
+
 
     # def is_valid_move(self,x,y,map):
     #     if map[y][x]!=

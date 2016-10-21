@@ -20,9 +20,10 @@ def main():
         hero = Hero('Grognak', mm.hero_start)
         gm = GM.graphics_manager(md.base_surface, hero)
         tm = TM(md.base_surface, hero)
-        tm.update()
+
         gm.update_game()
-        ic = IC(gm, hero)
+        tm.update()
+        ic = IC(gm,tm, hero)
 
         # once text manager is working...
         # tm = TM()

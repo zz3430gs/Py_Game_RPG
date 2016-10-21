@@ -20,6 +20,7 @@ class Hero(Character):
         # self.image = 'sprites/Hero.png'
         # hero position  x, y
         self.hero_pos = [start_pos[0],start_pos[1]]
+        self.set_starter_stats()
         '''self.killcount = 0'''
 
     # TODO: Add a kill Counter for additional Highscore info
