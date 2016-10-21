@@ -1,6 +1,9 @@
-import pygame
-import colors as C
 import math
+
+import pygame
+
+from graphics import colors as C
+
 
 class Text_Manager:
     STAT_BOX_COL_X = 30

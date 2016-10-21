@@ -19,8 +19,9 @@ class Hero(Character):
         # todo: Someday have multiple sprites for the hero.
         # self.image = 'sprites/Hero.png'
         # hero position  x, y
-        self.hero_pos = [start_pos[0],start_pos[1]]
+        self.hero_pos = [start_pos[0], start_pos[1]]
         self.set_starter_stats()
+        self.inventory = []
         '''self.killcount = 0'''
 
     # TODO: Add a kill Counter for additional Highscore info
@@ -37,7 +38,7 @@ class Hero(Character):
         self.max_hp = 10
         self.current_hp = 10
 
-    def set_opened_save_stats(self,hp,max_hp,armor,strength,xp,level,money,next_level):
+    def set_opened_save_stats(self,hp,max_hp,armor,strength,xp,level,money,next_level, inventory):
         self.current_hp = hp
         self.max_hp=max_hp
         self.armor = armor
@@ -46,7 +47,12 @@ class Hero(Character):
         self.level = level
         self.money = money
         self.next_level = next_level
+        self.sort_inventory(inventory)
         '''self.killcount=killcount'''
+
+    def sort_inventory(self,inventory):
+        for item in inventory:
+            self.inventory.append(item)
 
     def gain_xp(self, xp):
         self.xp += xp

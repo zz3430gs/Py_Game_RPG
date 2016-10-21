@@ -1,9 +1,7 @@
-import pygame, sys
-from pygame.locals import *
-from colors import *
-import map
 import math
-import text_manager as tm
+
+import pygame
+from colors import *
 
 
 # TODO:[] Char Stats Box

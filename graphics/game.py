@@ -1,12 +1,12 @@
-import pygame, sys
-from pygame.locals import *
-from colors import *
-from map import Map_Maker as MM
-from main_display import Main_Display as MD
-from input_controller import input_controller as IC
 import graphics_manager as GM
-from text_manager import Text_Manager as TM
+import pygame
+from colors import *
+from input_controller import input_controller as IC
+from map import Map_Maker as MM
+
 from characters.Hero import Hero
+from graphics.main_display import Main_Display as MD
+from text_manager import Text_Manager as TM
 
 
 def main():

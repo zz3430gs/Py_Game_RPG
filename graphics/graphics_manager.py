@@ -1,7 +1,6 @@
-import map
 import pygame
-import main_display
 
+from graphics import map
 
 
 class graphics_manager:

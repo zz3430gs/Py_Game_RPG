@@ -1,10 +1,8 @@
-import pygame
 import random
-import math
-import colors
-import sys
-from pygame.locals import *
-import pcdungeon as pcd
+
+from graphics import pcdungeon as pcd
+
+
 # TODO: place water, pent, and doors during generations. CHOOSE HERO START LOCATION
 
 class Map_Maker:
