@@ -77,15 +77,17 @@ class Map_Maker:
             if check_fail != True:
                 all_rooms.append(this_room)
 
-        self.center = self.place_hero_start(all_rooms)
-        self.carve_all_rooms(all_rooms)
 
+        self.carve_all_rooms(all_rooms)
+        self.center = self.place_hero_start(all_rooms)
                 # for row in self.starter_map:
                 #     print(row)
     def place_hero_start(self, all_rooms):
         # TODO: Make this much Better at placing the hero. Look Through the  map, find a coordinate that is a floor section. then place
         # THIS IS A REALLY HACKY WAY OF DOING THIS WHICH WORKS ONLY ABOUT 30% of the time.
         self.hero_start = [all_rooms[0].center[0],all_rooms[0].center[1]]
+
+    # TODO: def c
 
     def carve_all_rooms(self, all_rooms):
 

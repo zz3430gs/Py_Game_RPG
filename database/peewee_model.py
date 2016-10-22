@@ -35,6 +35,8 @@ class Hero_Model(Base_Model):
     level = IntegerField(null=False, default=1)
     money = IntegerField(null=False, default=0)
     next_level = IntegerField(null=False, default=100)
+    hero_pos_x = IntegerField(null = False)
+    hero_pos_y = IntegerField(null = False)
 
 class Merchant_Model(Base_Model):
     name = CharField(max_length=60, unique=True)

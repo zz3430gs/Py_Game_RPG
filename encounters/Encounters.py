@@ -36,3 +36,7 @@ from game.Combat import Combat
 def set_up_battle(hero):
     monster = random_monster_encounter(hero)
     this_fight = Combat(hero, monster)
+
+def make_list_of_monsters():
+    monster_list = []
+

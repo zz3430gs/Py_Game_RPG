@@ -15,8 +15,8 @@ class graphics_manager:
         # self.starter_map = starter_map
         # Camera move speeds in different directions in pixels
         self.cam_move_up = 1
-        self.cam_move_dn = 14
-        self.cam_move_rt = 14
+        self.cam_move_dn = 1
+        self.cam_move_rt = 1
         self.cam_move_lft = 1
         self.MM = map.Map_Maker()
         # This is the farthest the cameras screen can pan right/left (
@@ -79,6 +79,7 @@ class graphics_manager:
         # center based on cam_width
         # Never wander from the players position!!! NEVER!!
         self.cam_loc_x = hero_x - int(self.cam_width / 2.0)
+        # the Y axias works, x doesnt.
         self.cam_loc_y = hero_y - int(self.cam_height / 2.0)
         # if the camera has wandered off to center
         if self.cam_loc_x < 0:

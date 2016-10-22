@@ -5,6 +5,7 @@ from database.admin_displays import *
 from characters.Monster import Monster
 from characters.Merchant import Merchant
 from random import randint
+from random import shuffle
 from characters.Hero import Hero
 from time import sleep
 import sqlite3
@@ -18,7 +19,7 @@ def did_random_rest_encounter_occur(hero):
     chance_range = (10)
     if chance <= chance_range:
         print('A random encounter happens while you were sleeping')
-        encounter_chance = randint (1,100)
+        encounter_chance = randint(1,100)
         monster_chance = (50)
         if encounter_chance <= monster_chance:
             print('You are attacked by a monster while you were trying to sleep!')
@@ -33,10 +34,22 @@ def did_random_rest_encounter_occur(hero):
         hero.gain_hp_from_rest(True)
         return False
 
+# make a list of monsters for the level to contain
+def generate_monster_list(hero):
+    # This is how much xp the monsters need to be worth
+    xp_threshold = hero.next_level-hero.xp
+    all_monsters = []
+    total_monster_xp = 0
+    while total_monster_xp < xp_threshold:
+        monster = random_monster_encounter(hero)
+        all_monsters.append(monster)
+        total_monster_xp += monster.xp_val
+    shuffle(all_monsters)
+    return all_monsters
 
 def random_monster_encounter(hero):
     # figure out the levels the monster can be, not too low or too high
-    random_level = randint(hero.level - 1, hero.level + 2)
+    random_level = randint(hero.level - 1, hero.level + 1)
     # grab a monster, send it back for fighting
     monster = fetch_monster_make_object(random_level)
     # return that monster so the Encounters File can use them
@@ -67,8 +80,9 @@ def create_hero_save(hero_object):
                                               xp=hero_object.xp,
                                               level=hero_object.level,
                                               money=hero_object.money,
-                                              next_level=hero_object.next_level),
-
+                                              next_level=hero_object.next_level,
+                                              hero_pos_x=hero_object.hero_pos[0],
+                                              hero_pos_y=hero_object.hero_pos[1])
     new_save.save()
 
 def fetch_monster_make_object(level):
@@ -81,7 +95,7 @@ def fetch_monster_make_object(level):
     list_o = []
     while error:
         try:
-            for monster in Monster_Model.select():
+            for monster in Monster_Model.select().where(monster.level == level):
                 # print('Made it into the loop1')
                 if monster.level == level:
                     # print('made it into the loop')

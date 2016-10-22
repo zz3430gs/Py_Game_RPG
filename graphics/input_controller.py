@@ -16,7 +16,7 @@ class input_controller:
         while True:
             # Listen for events, this is about to get a whole lot bigger
             for event in pygame.event.get():
-                print(event)
+
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit
@@ -25,12 +25,16 @@ class input_controller:
                     # THIS APPEARS TO BE WORKING.  ONLY APPEARS TO BE THOUGH SINCE I DONT HAVE THE CAMERA TRACKING WORKING
                     if(event.key == K_RIGHT) and gm.MM.is_valid_move(hero.hero_pos[0]+1, hero.hero_pos[1], hero):
                         hero.hero_pos[0] += 1
+                        print(hero.hero_pos)
                     if (event.key == K_LEFT) and gm.MM.is_valid_move(hero.hero_pos[0]-1, hero.hero_pos[1], hero):
                         hero.hero_pos[0] -= 1
+                        print(hero.hero_pos)
                     if (event.key == K_UP) and gm.MM.is_valid_move(hero.hero_pos[0], hero.hero_pos[1]-1, hero):
                         hero.hero_pos[1] -= 1
+                        print(hero.hero_pos)
                     if (event.key == K_DOWN) and gm.MM.is_valid_move(hero.hero_pos[0], hero.hero_pos[1]+1, hero):
                         hero.hero_pos[1] += 1
+                        print(hero.hero_pos)
                     if (event.key == K_a):
             #             ATTACK!
                         print('ATTACKING!')

@@ -3,7 +3,7 @@
 
 
 class Item:
-
+   # TODO MOVE THIS TO SEPERATE DIRECTORY
    def __init__(self, name, atk_value, arm_value, weight, special_prop, price):
         self.name = name
         self.atk_value = atk_value

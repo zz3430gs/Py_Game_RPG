@@ -37,9 +37,14 @@ class Text_Manager:
         self.SMALL_FONT_HEIGHT = self.SMALL_FONT.size(' ')[1]
         # THIS IS THE TEXT SURFACE TO BE APPLIED TO THE MAIN SURFACE LATER
         self.base_surf = base_surf
+
+        self.battle_box = pygame.Rect(10,600, 550,200)
+        self.battle_box_surf = pygame.Surface((550,100))
+
         self.text_rect = pygame.Rect(550, 0, 250, 600)
-        self.main_text_surface = pygame.Surface((280, 600))
-        # self.main_text_surface.fill(C.Blue)
+        self.main_text_surface = pygame.Surface((250, 600))
+
+        self.main_text_surface.fill(C.Blue)
 
         # THESSE ARE THE LINES OF TEXT THAT WILL SHOW UP IN THE BATTLE_BOX
         self.battle_box_lines = []
@@ -62,12 +67,21 @@ class Text_Manager:
         self.add_text('Health: '+str(self.hero.current_hp)+'/'+str(self.hero.max_hp), C.White, self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y+5, False)
         self.add_text('Experience: ' + str(self.hero.xp) + '/' + str(self.hero.next_level), C.White, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y + 7, False)
         # After all Text is added, then blit to main surf
-        self.base_surf.blit(self.main_text_surface, (520, 0))
+        self.base_surf.blit(self.main_text_surface, (550, 0))
 
         # then render the XP and HP bars
+        # display movement options, and esc
         self.render_hp_bar(self.base_surf, self.hero)
-        self.render_xp_bar(self.base_surf,self.hero)
+        self.render_xp_bar(self.base_surf, self.hero)
+        self.update_battle_box()
         pygame.display.update(self.text_rect)
+
+    # TODO FIGURE THIS OUT! WHY DOESNT IT RENDER!?
+    def update_battle_box(self):
+        self.battle_box_surf.fill(C.Red)
+        self.base_surf.blit(self.battle_box_surf, (0, 600))
+        pygame.display.update(self.battle_box)
+
 
     # this method takes the string of text, the color, and two positional arguments, finally a large or small boolean
     def add_text(self, t, color, col_x, col_y, size_bool):
