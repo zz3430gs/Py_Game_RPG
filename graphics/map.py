@@ -76,16 +76,13 @@ class Map_Maker:
                         self.h_corridors(prev_center[0], center[0], prev_center[1])
             if check_fail != True:
                 all_rooms.append(this_room)
-
-
         self.carve_all_rooms(all_rooms)
-        self.center = self.place_hero_start(all_rooms)
-                # for row in self.starter_map:
-                #     print(row)
+        self.place_hero_start(all_rooms)
+
     def place_hero_start(self, all_rooms):
         # TODO: Make this much Better at placing the hero. Look Through the  map, find a coordinate that is a floor section. then place
         # THIS IS A REALLY HACKY WAY OF DOING THIS WHICH WORKS ONLY ABOUT 30% of the time.
-        self.hero_start = [all_rooms[0].center[0],all_rooms[0].center[1]]
+        self.hero_start = [all_rooms[0].center[0], all_rooms[0].center[1]]
 
     # TODO: def c
 

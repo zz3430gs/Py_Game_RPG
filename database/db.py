@@ -56,7 +56,10 @@ class Data_Manager:
     @staticmethod
     def random_monster_encounter(hero):
         # figure out the levels the monster can be, not too low or too high
-        random_level = randint(hero.level - 1, hero.level + 1)
+        if hero.level == 1:
+            random_level = randint(hero.level, hero.level + 1)
+        else:
+            random_level = randint(hero.level-1, hero.level + 1)
         # grab a monster, send it back for fighting
         monster = Data_Manager.fetch_monster_make_object(random_level)
         # return that monster so the Encounters File can use them
@@ -117,7 +120,7 @@ class Data_Manager:
                 error = False
                 return final_mons
             except IndexError:
-                print('Test Index Error')
+                print('Rounding up Monsters, they\'re being recalcitrant.')
 
     @staticmethod
     def fetch_hero_make_object(name):

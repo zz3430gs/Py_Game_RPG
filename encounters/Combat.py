@@ -77,7 +77,7 @@ class Combat:
                 # TODO: input controller resets this to false after executing the hero attacks
                 self.hero.hero_turn_bool = True
                 # self.hero_turn()
-            elif isinstance(participant, Monster):
+            elif isinstance(participant, Monster) and self.hero.hero_turn_bool == False:
 
                 self.monster_turn()
 
@@ -87,8 +87,9 @@ class Combat:
             '''DISPLAY COMBAT OPTIONS'''
             if key == 1:
                 self.hero.attack_enemy(self.monster)
-            if key == 2:
-                self.hero.special_attack(self.monster)
+            #     removed til written
+            # if key == 2:
+            #     self.hero.special_attack(self.monster)
             if key == 3:
                 self.hero.state = self.hero.states[2]
             # try:

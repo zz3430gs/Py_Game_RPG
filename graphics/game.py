@@ -22,7 +22,7 @@ def main():
         hero = Hero('Grognak', mm.hero_start)
         # make monsters for level
         cm = CM(hero)
-        gm = GM.graphics_manager(md.base_surface, hero)
+        gm = GM.graphics_manager(md.base_surface,mm, hero)
         tm = TM(md.base_surface, hero)
 
         gm.update_game()

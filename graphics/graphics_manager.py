@@ -5,7 +5,7 @@ from graphics import map
 
 class graphics_manager:
     # needs to know about the map instances, so it can call the maps methods for tiling sprites
-    def __init__(self, base_surf,hero):
+    def __init__(self, base_surf,mm,hero):
         # This is the number of tiles the camera will be able to see on X-axis
         self.base_surf = base_surf
         self.cam_width = 20
@@ -18,7 +18,7 @@ class graphics_manager:
         self.cam_move_dn = 1
         self.cam_move_rt = 1
         self.cam_move_lft = 1
-        self.MM = map.Map_Maker()
+        self.MM = mm
         # This is the farthest the cameras screen can pan right/left (
         self.cam_max_pan_x = self.MM.MAP_WIDTH - self.cam_width
         # this is the farthest the cameras screen can pan up/dn
@@ -155,6 +155,3 @@ class graphics_manager:
                     #             draw gameboard
         pygame.display.update()
 
-    @staticmethod
-    def render_hero(hero):
-        print('blit hero here')
