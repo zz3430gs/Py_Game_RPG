@@ -3,43 +3,55 @@
     That way at every stage of combat each method only needs to reference itself.
     Making the Monster and The Hero 'Transient Global Variables'''
 
-from character.Monster import Monster
-from character.Hero import Hero
+from characters.Monster import Monster
+from characters.Hero import Hero
 from random import shuffle
+from database.db import Data_Manager as DM
 from random import randint
-from game.displays import *
+# from game.displays import *
 
 class Combat:
-    def __init__(self, hero, monster):
+    def __init__(self, hero):
         self.hero = hero
-        self.monster = monster
+        self.all_monsters = DM.generate_monster_list(hero)
+        self.monster = None
 
+    def is_it_battle_time(self):
+        if randint(1, 100) % 5:
+            self.battle_time(self.hero)
 
-    def battle_time(self):
+    def battle_time(self, hero):
+        # get a monster from the list, remove it so if it dies it is gone
+        self.monster = self.all_monsters.pop()
+        # set to combat state so graphics will change
+        self.hero.state = self.hero.states[1]
         list_of_participants = [self.hero, self.monster]
         shuffle(list_of_participants)
-        #     '|   1) Attack   2) Drink Potion   3) Check Hero Status    4) Flee the Battle   |'
-        print('|          You encounter a {} while exploring, it attacks!'.format(self.monster.name))
+        # TODO: send a call to Text_Manager to display the combat options
         # While they both have life, keep battle going
         while self.hero.current_hp >= 1 and self.monster.current_hp >= 1:
             round_counter = 0
             # for each person in combat, let them take their turn
             for participant in list_of_participants:
-                # This variable is for implementatino of potions (since they last a limited time)
-                round_counter += 1
-                self.take_a_turn(participant)
-        #         if you are dead... exit combat after calling a HighScoreSave() method
+                if hero.state == 'flee':
+                    self.all_monsters.append(self.monster)
+                else:
+                    # This variable is for implementatino of potions and special attacks (since they last a limited time)
+                    self.take_a_turn(participant)
+                    round_counter += 1
+            #         if you are dead... exit combat after calling a HighScoreSave() method
         if self.hero.current_hp <= 0:
-            print('{} has died. The {} picks over the corpse.'.format(self.hero.name,self.monster.name))
-
+            # TODO: this becomes a call to text_manager --> GAME OVER SCREEN
+            '''hero state set for game over mode'''
+            hero.state = hero.states[3]
             '''This part here will be where the hall of fame stuff happens.  To be figured out later.
             My need to add 'state' to the DB in order to track who has died and who hasnt.'''
         #     If the monster is dead, get that cash and xp
         if self.monster.current_hp <= 0:
             self.hero.gain_xp(self.monster.xp_val)
             self.hero.money += self.monster.money
-
-    #     one of them will go first, fortunatly they both have the same attack and damage methods
+            # reset game_state to explore
+            self.hero.state = hero.states[0]
 
 
     def take_a_turn(self, participant):
@@ -49,39 +61,49 @@ class Combat:
             pass
         else:
             if isinstance(participant, Hero):
-
-                self.hero_turn()
+                # this is so input controller only accepts combat input when heros turn.
+                # TODO: input controller resets this to false after executing the hero attacks
+                self.hero.hero_turn_bool = True
+                # self.hero_turn()
             elif isinstance(participant, Monster):
 
                 self.monster_turn()
 
-    def hero_turn(self):
+    def hero_turn(self, key):
         while True:
-            display_fight_menu()
-            try:
+            # display_fight_menu()
+            '''DISPLAY COMBAT OPTIONS'''
+            if key == 1:
+                self.hero.attack_enemy(self.monster)
+            if key == 2:
+                self.hero.special_attack(self.monster)
+            if key == 3:
+                self.hero.state = self.hero.states[2]
+            # try:
 
-                choice = int(input('| This legendary hero is going to :                                            |'
-                                   ).format(self.hero.name))
-                if choice == 1:
-                    #     '|   1) Attack   2) Drink Potion   3) Check Hero Status    4) Flee the Battle   |'
-                    print('|                             Combat Begins!                                   |')
-                    self.hero.attack_enemy(self.monster)
-                    break
-                if choice == 2:
-                    print('Potion Drinking Menu')
-                    # TODO: Fred's Potion Drinking
-                    break
-                if choice == 3:
-                    self.hero.status()
-
-                if choice == 4:
-                    print('RUN AWAYYY')
-                    # This is where threading could be useful.  Send message to a other thread telling it the player has fled
-                    break
-            except ValueError or choice not in range(4):
-                print('{} is baffled by your choice, and looks beseechingly towards the sky for guidance.'.format(
-                    self.hero.name))
+            #     choice = int(input('| This legendary hero is going to :                                            |'
+            #                        ).format(self.hero.name))
+            #     if choice == 1:
+            #         #     '|   1) Attack   2) Drink Potion   3) Check Hero Status    4) Flee the Battle   |'
+            #         print('|                             Combat Begins!                                   |')
+            #         self.hero.attack_enemy(self.monster)
+            #         break
+            #     if choice == 2:
+            #         print('Potion Drinking Menu')
+            #         # TODO: Fred's Potion Drinking
+            #         break
+            #     if choice == 3:
+            #         self.hero.status()
+            #
+            #     if choice == 4:
+            #         print('RUN AWAYYY')
+            #         # This is where threading could be useful.  Send message to a other thread telling it the player has fled
+            #         break
+            # except ValueError or choice not in range(4):
+            #     print('{} is baffled by your choice, and looks beseechingly towards the sky for guidance.'.format(
+            #         self.hero.name))
 
 
     def monster_turn(self):
         self.monster.attack_enemy(self.hero)
+        # TODO: CALL TEXT MANAGER FOR RESULTS TO DISPLAY

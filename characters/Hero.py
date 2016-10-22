@@ -8,7 +8,7 @@ class Hero(Character):
         super().__init__(name)
         # in the future a additional Class class will grant further inheritence
         # Which will make many of these happen there, not here.
-        self.states = ['explore', 'combat', 'game_over', 'inventory', 'level_up', 'new_game', 'menu']
+        self.states = ['explore', 'combat', 'flee', 'game_over', 'inventory', 'level_up', 'new_game', 'menu']
         self.state = self.states[0]
         self.armor = 1  # Used to figure out if you missed
         self.strength = 3  # Used for the max on damage
@@ -20,14 +20,11 @@ class Hero(Character):
         # hero position  x, y
         self.hero_pos = [start_pos[0], start_pos[1]]
         self.set_starter_stats()
+        self.hero_turn_bool = True
         # self.inventory = [] # a list of items when it is included
         '''self.killcount = 0'''
 
     # TODO: Add a kill Counter for additional Highscore info
-
-    def set_state(self, new_state):
-        self.state = new_state
-    #     This will only be used in the next version of the game for state checking so people cant fighrt when theyre at the merchant etc
 
 
 
@@ -37,21 +34,22 @@ class Hero(Character):
         self.max_hp = 10
         self.current_hp = 10
 
-    def set_opened_save_stats(self,hp,max_hp,armor,strength,xp,level,money,next_level):
+    def set_opened_save_stats(self, hp, max_hp, armor, strength, xp, level, money, next_level, hero_pos_x, hero_pos_y):
         # TODO: ADD INVENTORY
         self.current_hp = hp
-        self.max_hp=max_hp
+        self.max_hp = max_hp
         self.armor = armor
         self.strength = strength
         self.xp = xp
         self.level = level
         self.money = money
         self.next_level = next_level
+        self.hero_pos = [hero_pos_y, hero_pos_x]
 
         # self.sort_inventory(inventory)
         '''self.killcount=killcount'''
 
-    def sort_inventory(self,inventory):
+    def sort_inventory(self, inventory):
         for item in inventory:
             self.inventory.append(item)
 
@@ -67,7 +65,7 @@ class Hero(Character):
     def gain_level(self):
         # Sort through the Dictionary of Levels,
         levels = data.get_levels()
-        next_level_xp = levels[self.level+1]
+        next_level_xp = levels[self.level + 1]
         self.max_hp += 3
         self.strength += 1
         if self.level % 3 == 0:
@@ -75,15 +73,13 @@ class Hero(Character):
         self.level += 1
         self.next_level = next_level_xp
 
-
     def gain_hp_from_rest(self, full_rest):
         # full_rest is a boolean
         if full_rest:
-            self.current_hp += self.level*2
-            if self.current_hp>self.max_hp:
+            self.current_hp += self.level * 2
+            if self.current_hp > self.max_hp:
                 self.current_hp = self.max_hp
         if full_rest == False:
             self.current_hp += self.level
-            if self.current_hp>self.max_hp:
+            if self.current_hp > self.max_hp:
                 self.current_hp = self.max_hp
-

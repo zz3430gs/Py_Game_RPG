@@ -1,29 +1,33 @@
-import graphics_manager as GM
+import graphics.graphics_manager as GM
 import pygame
-from colors import *
-from input_controller import input_controller as IC
-from map import Map_Maker as MM
-
+from graphics.colors import *
+from graphics.input_controller import input_controller as IC
+from graphics.map import Map_Maker as MM
+from encounters.Combat import Combat as CM
 from characters.Hero import Hero
 from graphics.main_display import Main_Display as MD
 from text_manager import Text_Manager as TM
-
+from database.db import Data_Manager as DB
 
 def main():
     while True:
+        # init data soures
+        dm = DB()
         # make the screen object
         pygame.init()
         md = MD()
+        # make map
         mm = MM()
-        # instantiate hero
-        # TODO: Make this a DB lookup or a new Game
+        # instantiate hero--> TODO: Make this a DB lookup or a new Game
         hero = Hero('Grognak', mm.hero_start)
+        # make monsters for level
+        cm = CM(hero)
         gm = GM.graphics_manager(md.base_surface, hero)
         tm = TM(md.base_surface, hero)
 
         gm.update_game()
         tm.update()
-        ic = IC(gm,tm, hero)
+        ic = IC(gm,tm,cm, hero)
 
         # once text manager is working...
         # tm = TM()
