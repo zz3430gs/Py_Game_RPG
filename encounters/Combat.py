@@ -20,6 +20,7 @@ class Combat:
         if rest_or_not == False:
             # 20% chance of combat while wandering around
             if randint(1, 100) % 5:
+                # TODO: 10/22/16:: WHY IS THIS CAUSING A INFINITE LOOP OF SOME KIND
                 self.battle_time(self.hero)
         elif rest_or_not == True:
             # 10%chance of combat while resting
