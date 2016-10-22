@@ -50,12 +50,13 @@ class input_controller:
                         gm.update_game()
 
                     if hero.state == 'combat':
-                        if hero.hero_turn_bool==True:
+                        if hero.hero_turn_bool:
                             if (event.key == K_a):
                                 cm.hero_turn(1)
+                                hero.hero_turn_bool = False
                     #             ATTACK!
                                 print('ATTACKING!')
-                            elif(event.key == K_f):
+                            elif (event.key == K_f):
                                 cm.hero_turn(3)
                                 print('flee')
                         else:

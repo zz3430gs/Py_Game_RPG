@@ -8,6 +8,7 @@ from characters.Hero import Hero
 from random import shuffle
 from database.db import Data_Manager as DM
 from random import randint
+from time import sleep
 # from game.displays import *
 
 class Combat:
@@ -50,6 +51,7 @@ class Combat:
                     shuffle(self.all_monsters)
                 else:
                     # This variable is for implementatino of potions and special attacks (since they last a limited time)
+                    # THERE IS A LOOP THAT IS GOING FOREVER
                     self.take_a_turn(participant)
                     round_counter += 1
             #         if you are dead... exit combat after calling a HighScoreSave() method
@@ -77,6 +79,8 @@ class Combat:
                 # this is so input controller only accepts combat input when heros turn.
                 # TODO: input controller resets this to false after executing the hero attacks
                 self.hero.hero_turn_bool = True
+                while self.hero.hero_turn_bool == True:
+                    sleep(2)
                 # self.hero_turn()
             elif isinstance(participant, Monster) and self.hero.hero_turn_bool == False:
 
