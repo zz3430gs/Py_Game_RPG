@@ -11,10 +11,12 @@ from time import sleep
 import sqlite3
 # TODO: Add try Excepts to all saves,
 # this is our database handler, it calls on the peewee data models that are set up
+import threading
 class Data_Manager:
     def __init__(self):
-        self.db = SqliteDatabase('./game/simple_rpg.db')
-
+        self.db = SqliteDatabase('./database/simple_rpg.db')
+        db.connect()
+        db.create_tables([Hero_Model, Monster_Model, Admin_User], safe=True)
 
     @staticmethod
     def did_random_rest_encounter_occur(hero):
@@ -101,14 +103,13 @@ class Data_Manager:
         list_o = []
         while error:
             try:
-                for monster in Monster_Model.select().where(Monster_Model.level == level):
+                monsters = Monster_Model.select().where(Monster_Model.level == level)
+                for monster in monsters:
                     # print('Made it into the loop1')
-                    if monster.level == level:
-                        # print('made it into the loop')
-                        loop_mon = Monster(monster.name,monster.xp_value,monster.money,monster.level)
-                        loop_mon.set_str_and_armor(monster.strength, monster.armor, monster.max_hp)
-                        sleep(0.1)
-                        list_o.append(loop_mon)
+                    loop_mon = Monster(monster.name,monster.xp_value,monster.money,monster.level)
+                    loop_mon.set_str_and_armor(monster.strength, monster.armor, monster.max_hp)
+                    sleep(0.1)
+                    list_o.append(loop_mon)
                 sleep(1)
 
                 rand_mons = randint(0, len(list_o))

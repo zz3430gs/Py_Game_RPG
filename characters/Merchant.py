@@ -1,4 +1,4 @@
-from character.Character import *
+from characters.Character import *
 
 
 class Merchant(Character):

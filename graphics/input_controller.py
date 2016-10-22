@@ -28,19 +28,19 @@ class input_controller:
                         # THIS APPEARS TO BE WORKING.  ONLY APPEARS TO BE THOUGH SINCE I DONT HAVE THE CAMERA TRACKING WORKING
                         if(event.key == K_RIGHT) and gm.MM.is_valid_move(hero.hero_pos[0]+1, hero.hero_pos[1], hero):
                             hero.hero_pos[0] += 1
-                            cm.is_it_battle_time()
+                            cm.is_it_battle_time(False)
                             print(hero.hero_pos)
                         if (event.key == K_LEFT) and gm.MM.is_valid_move(hero.hero_pos[0]-1, hero.hero_pos[1], hero):
                             hero.hero_pos[0] -= 1
-                            cm.is_it_battle_time()
+                            cm.is_it_battle_time(False)
                             print(hero.hero_pos)
                         if (event.key == K_UP) and gm.MM.is_valid_move(hero.hero_pos[0], hero.hero_pos[1]-1, hero):
                             hero.hero_pos[1] -= 1
-                            cm.is_it_battle_time()
+                            cm.is_it_battle_time(False)
                             print(hero.hero_pos)
                         if (event.key == K_DOWN) and gm.MM.is_valid_move(hero.hero_pos[0], hero.hero_pos[1]+1, hero):
                             hero.hero_pos[1] += 1
-                            cm.is_it_battle_time()
+                            cm.is_it_battle_time(False)
                             print(hero.hero_pos)
                         if (event.key == K_r):
                             combat_occurred = cm.is_it_battle_time()
