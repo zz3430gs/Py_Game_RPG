@@ -5,6 +5,7 @@ import pygame
 from graphics import colors as C
 
 
+# tm.update()--> change update so it checks the heros state. && TODO: add oponents health bar
 class Text_Manager:
     STAT_BOX_COL_X = 30
     STAT_BOX_COL_Y = .5
@@ -54,27 +55,28 @@ class Text_Manager:
         # self.add_text(self.hero.name, C.Red, 400, 400, True)
         # display hero name
         '''RENDER THE HEROES STATS'''
-        self.add_text(self.hero.name, C.Red, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y, True)
+        if self.hero.state == 'explore':
+            self.add_text(self.hero.name, C.Red, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y, True)
 
-        # Hero level: Small Font
-        self.add_text('Level: '+str(self.hero.level), C.Red, self.STAT_BOX_COL_X-20, self.STAT_BOX_COL_Y+2, False)
-        # str, then armor
+            # Hero level: Small Font
+            self.add_text('Level: '+str(self.hero.level), C.Red, self.STAT_BOX_COL_X-20, self.STAT_BOX_COL_Y+2, False)
+            # str, then armor
 
-        self.add_text('Strength: ' + str(self.hero.strength), C.Red, self.STAT_BOX_COL_X + 5, self.STAT_BOX_COL_Y + 2, False)
-        self.add_text('Armor:    ' + str(self.hero.armor), C.Red, self.STAT_BOX_COL_X + 5, self.STAT_BOX_COL_Y + 3, False)
+            self.add_text('Strength: ' + str(self.hero.strength), C.Red, self.STAT_BOX_COL_X + 5, self.STAT_BOX_COL_Y + 2, False)
+            self.add_text('Armor:    ' + str(self.hero.armor), C.Red, self.STAT_BOX_COL_X + 5, self.STAT_BOX_COL_Y + 3, False)
 
-        # HP & XP TEXT Numbers
-        self.add_text('Health: '+str(self.hero.current_hp)+'/'+str(self.hero.max_hp), C.White, self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y+5, False)
-        self.add_text('Experience: ' + str(self.hero.xp) + '/' + str(self.hero.next_level), C.White, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y + 7, False)
-        # After all Text is added, then blit to main surf
-        self.base_surf.blit(self.main_text_surface, (550, 0))
+            # HP & XP TEXT Numbers
+            self.add_text('Health: '+str(self.hero.current_hp)+'/'+str(self.hero.max_hp), C.White, self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y+5, False)
+            self.add_text('Experience: ' + str(self.hero.xp) + '/' + str(self.hero.next_level), C.White, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y + 7, False)
+            # After all Text is added, then blit to main surf
+            self.base_surf.blit(self.main_text_surface, (550, 0))
 
-        # then render the XP and HP bars
-        # display movement options, and esc
-        self.render_hp_bar(self.base_surf, self.hero)
-        self.render_xp_bar(self.base_surf, self.hero)
-        self.update_battle_box()
-        pygame.display.update(self.text_rect)
+            # then render the XP and HP bars
+            # display movement options, and esc
+            self.render_hp_bar(self.base_surf, self.hero.current_hp,self.hero.max_hp,True)
+            self.render_xp_bar(self.base_surf, self.hero.xp,self.hero.next_level)
+            self.update_battle_box()
+            pygame.display.update(self.text_rect)
 
     # TODO FIGURE THIS OUT! WHY DOESNT IT RENDER!?
     def update_battle_box(self):
@@ -96,9 +98,9 @@ class Text_Manager:
 
     '''THIS IS WHERE THE XP_BAR and HP_BAR have been moved to.  Not ideal but only way I was able to figure it out.'''
 
-    def render_xp_bar(self, base_surf, hero):
+    def render_xp_bar(self, base_surf, hero_xp,hero_next_level):
         x_y_wid_hei_for_outline = (578, 110, 200, 10)
-        fill_width = self.determine_xp_bar(hero.xp, hero.next_level)
+        fill_width = self.determine_xp_bar(hero_xp, hero_next_level)
         x_y_wid_hei_for_fill = (579, 111, fill_width, 8)
         empty_bar = pygame.draw.rect(base_surf, C.White, x_y_wid_hei_for_outline, 1)
         fill_bar = pygame.draw.rect(base_surf, C.Green, x_y_wid_hei_for_fill)
@@ -110,10 +112,20 @@ class Text_Manager:
         bar_width = math.floor(percent * 198)
         return bar_width
 
-    def render_hp_bar(self, base_surf, hero):
-        x_y_wid_hei_for_outline = (578, 75, 200, 12)
-        fill_width = self.determine_hp_bar(hero.current_hp, hero.max_hp)
-        x_y_wid_hei_for_fill = (579, 76, fill_width, 10)
+    # removed hero bindings sot aht this could display enemy health bars as well
+    def render_hp_bar(self, base_surf, current_hp, max_hp, hero_or_monster_bool):
+        x_y_wid_hei_for_outline = (0,0,0,0)
+        x_y_wid_hei_for_fill = (0,0,0,0)
+        if hero_or_monster_bool == True:
+            x_y_wid_hei_for_outline = (578, 75, 200, 12)
+            fill_width = self.determine_hp_bar(current_hp, max_hp)
+            x_y_wid_hei_for_fill = (579, 76, fill_width, 10)
+        elif hero_or_monster_bool == False:
+            # TODO fix where this shows up for combat
+            x_y_wid_hei_for_outline = (10,10,200,12)
+            fill_width = self.determine_hp_bar(current_hp,max_hp)
+            x_y_wid_hei_for_fill = (11,11,fill_width,10)
+
         empty_bar = pygame.draw.rect(base_surf, C.White, x_y_wid_hei_for_outline, 1)
         fill_bar = pygame.draw.rect(base_surf, C.Red, x_y_wid_hei_for_fill)
 

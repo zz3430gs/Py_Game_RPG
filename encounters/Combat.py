@@ -16,9 +16,18 @@ class Combat:
         self.all_monsters = DM.generate_monster_list(hero)
         self.monster = None
 
-    def is_it_battle_time(self):
-        if randint(1, 100) % 5:
-            self.battle_time(self.hero)
+    def is_it_battle_time(self,rest_or_not):
+        if rest_or_not == False:
+            # 20% chance of combat while wandering around
+            if randint(1, 100) % 5:
+                self.battle_time(self.hero)
+        elif rest_or_not == True:
+            # 10%chance of combat while resting
+            if randint(1,100) % 10:
+                self.battle_time(self.hero)
+                return False
+            else:
+                return True
 
     def battle_time(self, hero):
         # get a monster from the list, remove it so if it dies it is gone
@@ -28,6 +37,7 @@ class Combat:
         list_of_participants = [self.hero, self.monster]
         shuffle(list_of_participants)
         # TODO: send a call to Text_Manager to display the combat options
+
         # While they both have life, keep battle going
         while self.hero.current_hp >= 1 and self.monster.current_hp >= 1:
             round_counter = 0
@@ -35,6 +45,8 @@ class Combat:
             for participant in list_of_participants:
                 if hero.state == 'flee':
                     self.all_monsters.append(self.monster)
+                    # randomize again
+                    shuffle(self.all_monsters)
                 else:
                     # This variable is for implementatino of potions and special attacks (since they last a limited time)
                     self.take_a_turn(participant)

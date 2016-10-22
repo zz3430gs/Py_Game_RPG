@@ -42,6 +42,9 @@ class input_controller:
                             hero.hero_pos[1] += 1
                             cm.is_it_battle_time()
                             print(hero.hero_pos)
+                        if (event.key == K_r):
+                            combat_occurred = cm.is_it_battle_time()
+                            hero.gain_hp_from_rest(combat_occurred)
                         # TODO: ADD RESTING
                         gm.camera_chase_hero(hero.hero_pos[0], hero.hero_pos[1])
                         gm.update_game()
