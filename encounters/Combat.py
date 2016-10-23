@@ -80,7 +80,7 @@ class Combat:
                 # TODO: input controller resets this to false after executing the hero attacks
                 self.hero.hero_turn_bool = True
                 while self.hero.hero_turn_bool == True:
-                    sleep(2)
+                    print('waiting_on_player')
                 # self.hero_turn()
             elif isinstance(participant, Monster) and self.hero.hero_turn_bool == False:
 

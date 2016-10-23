@@ -117,10 +117,6 @@ class graphics_manager:
             for row in range(self.cam_height):
                 for col in range(self.cam_width):
                     y, x = self.visible_tiles[col][row].topleft
-                    # if the hero is there render it
-                    # if self.MM.starter_map[row + self.cam_loc_y][col+self.cam_loc_x] == self.Hero.hero_pos:
-                    # if self.MM.starter_map[row + self.cam_loc_y] == self.Hero.hero_pos[0] and \
-                    #     self.MM.starter_map[col + self.cam_loc_x] == self.Hero.hero_pos[1]:
                     # IF IT IS A WALL
                     try:
                         if self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[0]:
