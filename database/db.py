@@ -28,7 +28,7 @@ class Data_Manager:
             monster_chance = (50)
             if encounter_chance <= monster_chance:
                 print('You are attacked by a monster while you were trying to sleep!')
-                Data_Manager.random_monster_encounter(hero)
+                Data_Manager.random_monster_encounter(hero.level)
                 return True
             else:
                 print('A wandering merchant approaches your camp')
@@ -47,19 +47,19 @@ class Data_Manager:
         all_monsters = []
         total_monster_xp = 0
         while total_monster_xp < xp_threshold:
-            monster = Data_Manager.random_monster_encounter(hero)
+            monster = Data_Manager.random_monster_encounter(hero.level)
             all_monsters.append(monster)
             total_monster_xp += monster.xp_val
         shuffle(all_monsters)
         return all_monsters
 
     @staticmethod
-    def random_monster_encounter(hero):
+    def random_monster_encounter(hero_level):
         # figure out the levels the monster can be, not too low or too high
-        if hero.level == 1:
-            random_level = randint(hero.level, hero.level + 1)
+        if hero_level == 1:
+            random_level = randint(hero_level, hero_level + 1)
         else:
-            random_level = randint(hero.level-1, hero.level + 1)
+            random_level = randint(hero_level-1, hero_level + 1)
         # grab a monster, send it back for fighting
         monster = Data_Manager.fetch_monster_make_object(random_level)
         # return that monster so the Encounters File can use them

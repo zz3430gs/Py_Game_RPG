@@ -15,7 +15,5 @@ def get_levels():
     }
     return dictionary_of_levels
 
-def monsters():
-    monsters = [{'name':'',}]
 
 

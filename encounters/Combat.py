@@ -10,7 +10,7 @@ from database.db import Data_Manager as DM
 from random import randint
 from time import sleep
 # from game.displays import *
-
+# TODO: Add Combat Clock to try and establish some goddamn order for the turns. NOOTHIUNG ELSE IS WORKING
 class Combat:
     def __init__(self, hero):
         self.hero = hero
@@ -79,8 +79,9 @@ class Combat:
                 # this is so input controller only accepts combat input when heros turn.
                 # TODO: input controller resets this to false after executing the hero attacks
                 self.hero.hero_turn_bool = True
-                while self.hero.hero_turn_bool == True:
-                    print('waiting_on_player')
+                # THIS DIDNT WORK
+                # while self.hero.hero_turn_bool == True:
+                #     print('waiting_on_player')
                 # self.hero_turn()
             elif isinstance(participant, Monster) and self.hero.hero_turn_bool == False:
 

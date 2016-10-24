@@ -79,8 +79,10 @@ class graphics_manager:
         # center based on cam_width
         # Never wander from the players position!!! NEVER!!
         self.cam_loc_x = hero_x - int(self.cam_width / 2.0)
+        print('Camera_loc_x: {}, hero_x: {}'.format(self.cam_loc_x,hero_x))
         # the Y axias works, x doesnt.
         self.cam_loc_y = hero_y - int(self.cam_height / 2.0)
+        print('Camera_loc_x: {}, hero_x: {}'.format(self.cam_loc_y, hero_y))
         # if the camera has wandered off to center
         if self.cam_loc_x < 0:
             # get it in line

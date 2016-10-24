@@ -44,7 +44,7 @@ class Hero(Character):
         self.level = level
         self.money = money
         self.next_level = next_level
-        self.hero_pos = [hero_pos_y, hero_pos_x]
+        self.hero_pos = [hero_pos_x, hero_pos_y]
 
         # self.sort_inventory(inventory)
         '''self.killcount=killcount'''
