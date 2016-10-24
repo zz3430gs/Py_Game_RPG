@@ -2,6 +2,12 @@ import unittest
 import characters.Character as C
 import characters.Hero as H
 import characters.Monster as M
+import database.db as db
+
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(test_base_char_classes)
+    suite.addTest(test_db)
 
 class test_base_char_classes(unittest.TestCase):
 
@@ -57,3 +63,14 @@ class test_base_char_classes(unittest.TestCase):
         hero1.attack_enemy(monster)
         self.assertLess(monster.current_hp, 1)
 
+class test_db(unittest.TestCase):
+
+    def make_db_handler(self):
+        DB = db.Data_Manager()
+        self.assertIsInstance(DB, db.Data_Manager)
+
+    def check_generators(self):
+        # Check the monster list generator
+        hero = db.Hero('Grognak', [1, 1])
+        list_mons = db.Data_Manager.generate_monster_list(hero)
+        self.assertIsInstance(list_mons, list)

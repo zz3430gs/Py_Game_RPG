@@ -8,7 +8,7 @@ class graphics_manager:
     def __init__(self, base_surf,mm,hero):
         # This is the number of tiles the camera will be able to see on X-axis
         self.base_surf = base_surf
-        self.cam_width = 20
+        self.cam_width = 21
         self.Hero = hero
         # This is the number of tiles the camera will be able to see on Y-axis
         self.cam_height = 20
@@ -79,20 +79,21 @@ class graphics_manager:
         # center based on cam_width
         # Never wander from the players position!!! NEVER!!
         self.cam_loc_x = hero_x - int(self.cam_width / 2.0)
-        print('Camera_loc_x: {}, hero_x: {}'.format(self.cam_loc_x,hero_x))
+        print('Camera_loc_x: {}, hero_x: {}'.format(self.cam_loc_x, hero_x))
         # the Y axias works, x doesnt.
         self.cam_loc_y = hero_y - int(self.cam_height / 2.0)
-        print('Camera_loc_x: {}, hero_x: {}'.format(self.cam_loc_y, hero_y))
+        print('Camera_loc_y: {}, hero_y: {}'.format(self.cam_loc_y, hero_y))
         # if the camera has wandered off to center
-        if self.cam_loc_x < 0:
-            # get it in line
-            self.cam_loc_x = 0
-        elif self.cam_loc_x > 0:
-            self.cam_loc_x = self.cam_max_pan_x
-        if self.cam_loc_y < 0:
-            self.cam_loc_y = 0
-        elif self.cam_loc_y > self.cam_max_pan_y:
-            self.cam_loc_y = 0
+        # if self.cam_loc_x < 0:
+        #     # get it in line
+        #     self.cam_loc_x = hero_x - int(self.cam_width / 2.0)
+        # elif self.cam_loc_x > 0:
+        #     self.cam_loc_x = self.cam_max_pan_x
+        # if self.cam_loc_y < 0:
+        #     self.cam_loc_y = hero_y - int(self.cam_height / 2.0)
+        # elif self.cam_loc_y > self.cam_max_pan_y:
+        #     self.cam_loc_y = 0
+
 
     def legal_camera_move(self, hero):
         x = hero.hero_pos[0]

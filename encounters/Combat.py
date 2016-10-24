@@ -9,6 +9,7 @@ from random import shuffle
 from database.db import Data_Manager as DM
 from random import randint
 from time import sleep
+import pygame as pg
 # from game.displays import *
 # TODO: Add Combat Clock to try and establish some goddamn order for the turns. NOOTHIUNG ELSE IS WORKING
 class Combat:
@@ -16,6 +17,7 @@ class Combat:
         self.hero = hero
         self.all_monsters = DM.generate_monster_list(hero)
         self.monster = None
+        self.clock = pg.time.Clock()
 
     def is_it_battle_time(self,rest_or_not):
         if rest_or_not == False:
@@ -79,6 +81,7 @@ class Combat:
                 # this is so input controller only accepts combat input when heros turn.
                 # TODO: input controller resets this to false after executing the hero attacks
                 self.hero.hero_turn_bool = True
+                # pg.event.wait()
                 # THIS DIDNT WORK
                 # while self.hero.hero_turn_bool == True:
                 #     print('waiting_on_player')

@@ -29,7 +29,7 @@ class Map_Maker:
         self.TILE_SIZE = 25
         self.MAP_WIDTH = 51
         self.MAP_HEIGHT = 51
-        self.SCREEN_WIDTH = 20
+        self.SCREEN_WIDTH = 21
         self.SCREEN_HEIGHT = 20
         self.hero_start = [0, 0]
         # WALL = 0
@@ -42,6 +42,7 @@ class Map_Maker:
         '''The Map is being made and modified byt these two lines'''
         self.starter_map = [[self.resources[0] for w in range(self.MAP_WIDTH)] for h in range(self.MAP_HEIGHT)]
         self.place_rooms_in_map()
+        # TODO: Remove after testing over
         for row in self.starter_map:
             print(row)
 
