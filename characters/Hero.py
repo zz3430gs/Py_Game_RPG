@@ -70,7 +70,7 @@ class Hero(Character):
         self.prev_level = self.next_level
         levels = data.get_levels()
         next_level_xp = levels[self.level + 1]
-        self.max_hp += 3
+        self.max_hp += 5
         self.strength += 1
         if self.level % 3 == 0:
             self.armor += 1
