@@ -22,7 +22,7 @@ class Text_Manager:
         self.RIGHT_MENU_GRID_WIDTH = 80
         self.RIGHT_MENU_GRID_HEIGHT = 30
         # Font found via print(pygame.font.match_font('berlinsansfbdemi'))
-        self.FONT_NAME = 'C:\Windows\Fonts\BRLNSDB.TTF'
+        self.FONT_NAME = 'BRLNSDB.TTF'
         self.LARGE_FONT_SIZE = 20
         self.small_FONT_SIZE = 14
         # self.base_surf = base_surf

@@ -22,6 +22,9 @@ class Combat:
         self.monster = None
         self.clock = pg.time.Clock()
 
+        if len(self.all_monsters) == 0:
+            self.monster = None
+
     def is_it_battle_time(self, rest_or_not):
         if rest_or_not == False:
             # 20% chance of combat while wandering around
