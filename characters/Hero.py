@@ -15,12 +15,14 @@ class Hero(Character):
         self.xp = 0
         self.level = 1
         self.money = 5
+        self.prev_level = 0
         self.next_level = 100
         # todo: Someday have multiple sprites for the hero.
         # hero position  x, y
         self.hero_pos = [start_pos[0], start_pos[1]]
         self.set_starter_stats()
         self.hero_turn_bool = True
+
         # self.inventory = [] # a list of items when it is included
         '''self.killcount = 0'''
 
@@ -44,6 +46,7 @@ class Hero(Character):
         self.level = level
         self.money = money
         self.next_level = next_level
+
         self.hero_pos = [hero_pos_x, hero_pos_y]
 
         # self.sort_inventory(inventory)
@@ -64,6 +67,7 @@ class Hero(Character):
 
     def gain_level(self):
         # Sort through the Dictionary of Levels,
+        self.prev_level = self.next_level
         levels = data.get_levels()
         next_level_xp = levels[self.level + 1]
         self.max_hp += 3
@@ -71,6 +75,7 @@ class Hero(Character):
         if self.level % 3 == 0:
             self.armor += 1
         self.level += 1
+        # self.xp = 0
         self.next_level = next_level_xp
 
     def gain_hp_from_rest(self, full_rest):

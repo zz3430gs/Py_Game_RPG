@@ -8,6 +8,7 @@ from characters.Hero import Hero
 from random import shuffle
 from database.db import Data_Manager as DM
 from random import randint
+from graphics.input_controller import input_controller as IC
 
 import pygame as pg
 import pygame.event as py_e
@@ -39,7 +40,7 @@ class Combat:
             else:
                 return True
 
-    
+
 
     def battle_time(self, hero):
         # get a monster from the list, remove it so if it dies it is gone
