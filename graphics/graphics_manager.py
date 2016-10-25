@@ -79,10 +79,10 @@ class graphics_manager:
         # center based on cam_width
         # Never wander from the players position!!! NEVER!!
         self.cam_loc_x = hero_x - int(self.cam_width / 2.0)
-        print('Camera_loc_x: {}, hero_x: {}'.format(self.cam_loc_x, hero_x))
+        # print('Camera_loc_x: {}, hero_x: {}'.format(self.cam_loc_x, hero_x))
         # the Y axias works, x doesnt.
         self.cam_loc_y = hero_y - int(self.cam_height / 2.0)
-        print('Camera_loc_y: {}, hero_y: {}'.format(self.cam_loc_y, hero_y))
+        # print('Camera_loc_y: {}, hero_y: {}'.format(self.cam_loc_y, hero_y))
         # if the camera has wandered off to center
         # if self.cam_loc_x < 0:
         #     # get it in line
@@ -116,7 +116,7 @@ class graphics_manager:
         # # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
         # this should render only tiles that are in the camers view
         # if the hero is exploring render the exploration map
-        if self.Hero.state =='explore':
+        if self.Hero.state == 'explore':
             for row in range(self.cam_height):
                 for col in range(self.cam_width):
                     y, x = self.visible_tiles[col][row].topleft
@@ -140,8 +140,8 @@ class graphics_manager:
                         elif self.MM.starter_map[col + self.cam_loc_x][row + self.cam_loc_y] == self.MM.resources[5]:
                             self.base_surf.blit(self.textures[5], (x, y))
                     except IndexError as e:
-                        print(e)
-
+                        # if the inndex error crops up, ignore it.  It doesnt matter anymore.
+                        pass
                     ex = row+self.cam_loc_y
                     why = col+self.cam_loc_x
                     if ex == self.Hero.hero_pos[1] and why == self.Hero.hero_pos[0]:

@@ -8,7 +8,7 @@ class Hero(Character):
         super().__init__(name)
         # in the future a additional Class class will grant further inheritence
         # Which will make many of these happen there, not here.
-        self.states = ['explore', 'combat', 'flee', 'game_over', 'inventory', 'level_up', 'new_game', 'menu']
+        self.states = ['explore', 'combat', 'flee', 'game_over', 'inventory','next_level', 'level_up', 'new_game', 'menu']
         self.state = self.states[0]
         self.armor = 1  # Used to figure out if you missed
         self.strength = 3  # Used for the max on damage
@@ -55,7 +55,7 @@ class Hero(Character):
 
     def gain_xp(self, xp):
         self.xp += xp
-        if xp >= self.next_level:
+        if self.xp >= self.next_level:
             # If the Heros XP is more than the next level
             # Level him up
             self.gain_level()

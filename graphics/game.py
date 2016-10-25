@@ -1,13 +1,14 @@
-import graphics.graphics_manager as GM
 import pygame
-from graphics.colors import *
-from graphics.input_controller import input_controller as IC
-from graphics.map import Map_Maker as MM
-from encounters.Combat import Combat as CM
+
+import graphics.graphics_manager as GM
 from characters.Hero import Hero
-from graphics.main_display import Main_Display as MD
-from text_manager import Text_Manager as TM
 from database.db import Data_Manager as DB
+from encounters.Combat import Combat as CM
+from graphics.input_controller import input_controller as IC
+from graphics.main_display import Main_Display as MD
+from graphics.map import Map_Maker as MM
+from graphics.text_manager import Text_Manager as TM
+
 
 def main():
     while True:

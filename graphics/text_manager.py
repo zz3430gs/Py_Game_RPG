@@ -53,6 +53,7 @@ class Text_Manager:
     # THIS METHOD ACTUALLY CREATES TEXT TO BE BLITTED ONTO THE GAME SURFACE VIA add_text()
     def update(self):
         # self.add_text(self.hero.name, C.Red, 400, 400, True)
+        self.main_text_surface.fill((0,0,0))
         # display hero name
         '''RENDER THE HEROES STATS'''
         if self.hero.state == 'explore':

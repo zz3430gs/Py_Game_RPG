@@ -8,10 +8,12 @@ from characters.Hero import Hero
 from random import shuffle
 from database.db import Data_Manager as DM
 from random import randint
-from time import sleep
+
 import pygame as pg
+import pygame.event as py_e
 # from game.displays import *
 # TODO: Add Combat Clock to try and establish some goddamn order for the turns. NOOTHIUNG ELSE IS WORKING
+
 class Combat:
     def __init__(self, hero):
         self.hero = hero
@@ -19,23 +21,33 @@ class Combat:
         self.monster = None
         self.clock = pg.time.Clock()
 
-    def is_it_battle_time(self,rest_or_not):
+    def is_it_battle_time(self, rest_or_not):
         if rest_or_not == False:
             # 20% chance of combat while wandering around
-            if randint(1, 100) % 5:
+            randomThing = randint(1, 100)
+            if randomThing % 5 == 0:
                 # TODO: 10/22/16:: WHY IS THIS CAUSING A INFINITE LOOP OF SOME KIND
+                self.hero.state = self.hero.states[1]
                 self.battle_time(self.hero)
+            else:
+                pass
         elif rest_or_not == True:
             # 10%chance of combat while resting
-            if randint(1,100) % 10:
+            if randint(1, 100) % 10 == 0:
                 self.battle_time(self.hero)
                 return False
             else:
                 return True
 
+    
+
     def battle_time(self, hero):
         # get a monster from the list, remove it so if it dies it is gone
-        self.monster = self.all_monsters.pop()
+        try:
+            self.monster = self.all_monsters.pop()
+        except IndexError:
+            print('out of monsters')
+            self.hero.state = self.hero.states[4]
         # set to combat state so graphics will change
         self.hero.state = self.hero.states[1]
         list_of_participants = [self.hero, self.monster]
@@ -81,49 +93,57 @@ class Combat:
                 # this is so input controller only accepts combat input when heros turn.
                 # TODO: input controller resets this to false after executing the hero attacks
                 self.hero.hero_turn_bool = True
-                # pg.event.wait()
+                # pg.event.clear()
+
+
+                self.hero_turn(1)
+
+                self.hero.hero_turn_bool = False
                 # THIS DIDNT WORK
                 # while self.hero.hero_turn_bool == True:
                 #     print('waiting_on_player')
                 # self.hero_turn()
             elif isinstance(participant, Monster) and self.hero.hero_turn_bool == False:
-
+                self.hero.hero_turn_bool = False
                 self.monster_turn()
+                self.hero.hero_turn_bool = True
 
     def hero_turn(self, key):
-        while True:
-            # display_fight_menu()
-            '''DISPLAY COMBAT OPTIONS'''
-            if key == 1:
-                self.hero.attack_enemy(self.monster)
-            #     removed til written
-            # if key == 2:
-            #     self.hero.special_attack(self.monster)
-            if key == 3:
-                self.hero.state = self.hero.states[2]
-            # try:
 
-            #     choice = int(input('| This legendary hero is going to :                                            |'
-            #                        ).format(self.hero.name))
-            #     if choice == 1:
-            #         #     '|   1) Attack   2) Drink Potion   3) Check Hero Status    4) Flee the Battle   |'
-            #         print('|                             Combat Begins!                                   |')
-            #         self.hero.attack_enemy(self.monster)
-            #         break
-            #     if choice == 2:
-            #         print('Potion Drinking Menu')
-            #         # TODO: Fred's Potion Drinking
-            #         break
-            #     if choice == 3:
-            #         self.hero.status()
-            #
-            #     if choice == 4:
-            #         print('RUN AWAYYY')
-            #         # This is where threading could be useful.  Send message to a other thread telling it the player has fled
-            #         break
-            # except ValueError or choice not in range(4):
-            #     print('{} is baffled by your choice, and looks beseechingly towards the sky for guidance.'.format(
-            #         self.hero.name))
+        # display_fight_menu()
+        '''DISPLAY COMBAT OPTIONS'''
+        if key == 1:
+            self.hero.attack_enemy(self.monster)
+            self.clock.tick(30)
+        #     removed til written
+        # if key == 2:
+        #     self.hero.special_attack(self.monster)
+        if key == 3:
+            self.hero.state = self.hero.states[2]
+            self.clock.tick(30)
+        # try:
+
+        #     choice = int(input('| This legendary hero is going to :                                            |'
+        #                        ).format(self.hero.name))
+        #     if choice == 1:
+        #         #     '|   1) Attack   2) Drink Potion   3) Check Hero Status    4) Flee the Battle   |'
+        #         print('|                             Combat Begins!                                   |')
+        #         self.hero.attack_enemy(self.monster)
+        #         break
+        #     if choice == 2:
+        #         print('Potion Drinking Menu')
+        #         # TODO: Fred's Potion Drinking
+        #         break
+        #     if choice == 3:
+        #         self.hero.status()
+        #
+        #     if choice == 4:
+        #         print('RUN AWAYYY')
+        #         # This is where threading could be useful.  Send message to a other thread telling it the player has fled
+        #         break
+        # except ValueError or choice not in range(4):
+        #     print('{} is baffled by your choice, and looks beseechingly towards the sky for guidance.'.format(
+        #         self.hero.name))
 
 
     def monster_turn(self):
