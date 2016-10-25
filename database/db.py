@@ -97,30 +97,20 @@ class Data_Manager:
         new_save.save()
     @staticmethod
     def fetch_monster_make_object(level):
-        '''THE ONLY REAL FIX FOR THIS IS TO DO MULTITHREADING APPARENTLY
-            SINCE I PUT IN THE PAUSES IT IS FAR MORE LIKELY TO SUCCEED THAN NOT.  BUT IT STILL CRASHES SOMETIMES'''
-        # TODO: Make this Multithreaded for true success
-        error = True
         if level <= 0:
             level = 1
         list_o = []
-        while error:
-            try:
-                monsters = Monster_Model.select().where(Monster_Model.level == level)
-                for monster in monsters:
-                    # print('Made it into the loop1')
-                    loop_mon = Monster(monster.name,monster.xp_value,monster.money,monster.level)
-                    loop_mon.set_str_and_armor(monster.strength, monster.armor, monster.max_hp)
-                    sleep(0.1)
-                    list_o.append(loop_mon)
-                sleep(1)
+        monsters = Monster_Model.select().where(Monster_Model.level == level)
+        for monster in monsters:
+            # print('Made it into the loop1')
+            loop_mon = Monster(monster.name,monster.xp_value,monster.money,monster.level)
+            loop_mon.set_str_and_armor(monster.strength, monster.armor, monster.max_hp)
+            list_o.append(loop_mon)
 
-                rand_mons = randint(0, len(list_o))
-                final_mons = list_o[rand_mons]
-                error = False
-                return final_mons
-            except IndexError:
-                print('Rounding up Monsters, they\'re being recalcitrant.')
+        rand_mons = randint(0, len(list_o) - 1)
+        final_mons = list_o[rand_mons]
+        return final_mons
+
 
     @staticmethod
     def fetch_hero_make_object(name):
