@@ -7,7 +7,6 @@ from characters.Merchant import Merchant
 from random import randint
 from random import shuffle
 from characters.Hero import Hero
-from time import sleep
 import sqlite3
 # TODO: Add try Excepts to all saves,
 # this is our database handler, it calls on the peewee data models that are set up
