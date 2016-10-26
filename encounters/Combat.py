@@ -8,11 +8,10 @@ from characters.Hero import Hero
 from random import shuffle
 from database.db import Data_Manager as DM
 from random import randint
-from graphics.input_controller import input_controller as IC
 
 import pygame as pg
-import pygame.event as py_e
-# from game.displays import *
+from pygame import key
+
 # TODO: Add Combat Clock to try and establish some goddamn order for the turns. NOOTHIUNG ELSE IS WORKING
 
 class Combat:
@@ -22,8 +21,7 @@ class Combat:
         self.monster = None
         self.clock = pg.time.Clock()
 
-        if len(self.all_monsters) == 0:
-            self.monster = None
+
 
     def is_it_battle_time(self, rest_or_not):
         if rest_or_not == False:
@@ -47,6 +45,9 @@ class Combat:
 
     def battle_time(self, hero):
         # get a monster from the list, remove it so if it dies it is gone
+
+        if len(self.all_monsters)==0:
+            self.all_monsters = DM.generate_monster_list(self.hero)
         try:
             self.monster = self.all_monsters.pop()
         except IndexError:
@@ -67,6 +68,7 @@ class Combat:
                     self.all_monsters.append(self.monster)
                     # randomize again
                     shuffle(self.all_monsters)
+                    break
                 else:
                     # This variable is for implementatino of potions and special attacks (since they last a limited time)
                     # THERE IS A LOOP THAT IS GOING FOREVER
@@ -88,6 +90,7 @@ class Combat:
 
 
     def take_a_turn(self, participant):
+
         # is it the monsters turn or the players turn?
         # check if they are dead
         if participant.current_hp <= 0:
@@ -95,18 +98,20 @@ class Combat:
         else:
             if isinstance(participant, Hero):
                 # this is so input controller only accepts combat input when heros turn.
-                # TODO: input controller resets this to false after executing the hero attacks
                 self.hero.hero_turn_bool = True
-                # pg.event.clear()
 
-
-                self.hero_turn(1)
-
-                self.hero.hero_turn_bool = False
-                # THIS DIDNT WORK
-                # while self.hero.hero_turn_bool == True:
-                #     print('waiting_on_player')
-                # self.hero_turn()
+                while self.hero.hero_turn_bool:
+                    for event in pg.event.get():
+                        if event.type == pg.KEYDOWN:
+                            if event.key == pg.K_a:
+                                self.hero_turn(1)
+                                self.hero.hero_turn_bool = False
+                                break
+                            #     TODO: Make fleeing work
+                            # elif event.key == pg.K_f:
+                            #     self.hero.state = self.hero.states[2]
+                            #     self.hero.hero_turn_bool = False
+                            #     break
             elif isinstance(participant, Monster) and self.hero.hero_turn_bool == False:
                 self.hero.hero_turn_bool = False
                 self.monster_turn()

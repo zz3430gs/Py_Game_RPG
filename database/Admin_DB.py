@@ -1,9 +1,9 @@
 from database import admin_displays
-from database.db import *
+from database.db import Data_Manager as DM
 import sys
 from sqlite3 import IntegrityError
-from character.Monster import *
-from character.Merchant import *
+from characters.Monster import *
+from characters.Merchant import *
 from database.peewee_model import *
 from database.Admin_User import *
 
@@ -47,7 +47,7 @@ def login_loop():
         admin_displays.display_admin_login()
         u_name = input('Please enter your username.\n')
         pw = input('Please enter your password\n')
-        valid_or_not = check_for_admin_priveleges(u_name,pw)
+        valid_or_not = DM.check_for_admin_priveleges(u_name,pw)
     admin_db()
 
 
@@ -111,7 +111,7 @@ def insert_monster_loop():
     # Now that all that data has been collected we toss it into the Peewee model, and send it to the DB
     new_monster = Monster(name,xp_val,money,level)
     new_monster.set_str_and_armor(strength, armor, max_hp)
-    add_monster(new_monster)
+    DM.add_monster(new_monster)
 
 
 def delete_monster_loop():
@@ -119,7 +119,7 @@ def delete_monster_loop():
     # Call the show monster function from db.py
     delete_loop = True
     while delete_loop:
-        show_all_monsters()
+        DM.show_all_monsters()
         to_delete = input('Which monster do you want to delete? Enter it\'s name.')
         while True:
             y_o_n = input('You are trying to delete {}, is that the record you mean to delete?'.format(to_delete))
@@ -138,7 +138,7 @@ def delete_hero_loop():
     print('Here we delete a hero')
     delete_loop = True
     while delete_loop:
-        present = show_all_heroes()
+        present = DM.show_all_heroes()
         if present == False:
             print('Sorry, there are no Heros as you can see.')
             break
@@ -202,14 +202,14 @@ def insert_merchant_loop():
             print('We got an error')
     new_merchant = Merchant(name,money)
     new_merchant.set_armor_max_hp(armor, max_hp)
-    add_merchant(new_merchant)
+    DM.add_merchant(new_merchant)
 
 
 def delete_merchant_loop():
     print('Here we Delete a merchant')
     delete_loop = True
     while delete_loop:
-        show_all_merchants()
+        DM.show_all_merchants()
         to_delete = input('Which merchant do you want to delete? Enter the name of the merchant.')
         while True:
             y_o_n = input('You are trying to delete {}, is that the record you mean to delete?'.format(to_delete))
@@ -238,3 +238,5 @@ def delete_admin_loop():
           '-----DANGEROUS TERRITORY-----\n'
           '----DONT DELETE YOURSELF!----')
 #     TODO: Figure out a way to make sure that there is always one admin before we implement this.
+
+login_loop()

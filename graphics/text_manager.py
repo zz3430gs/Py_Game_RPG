@@ -16,7 +16,7 @@ class Text_Manager:
     BLINK_SPEED_ON = 30
     BLINK_SPEED_OFF = 5
 
-    def __init__(self, base_surf, hero):
+    def __init__(self, base_surf, hero, combat):
 
         # statPageConstants
         self.RIGHT_MENU_GRID_WIDTH = 80
@@ -54,7 +54,25 @@ class Text_Manager:
     def update(self):
         # self.add_text(self.hero.name, C.Red, 400, 400, True)
         self.main_text_surface.fill((0,0,0))
-        # display hero name
+        '''COMBAT DISPLAY'''
+        if self.hero.state == 'combat':
+            self.add_text(self.hero.name, C.Red, self.STAT_BOX_COL_X - 6, self.STAT_BOX_COL_Y, True)
+            # Hero level: Small Font
+            self.add_text('Level: ' + str(self.hero.level), C.Red, self.STAT_BOX_COL_X - 20, self.STAT_BOX_COL_Y + 2,
+                          False)
+            # str, then armor
+            self.add_text('Strength: ' + str(self.hero.strength), C.Red, self.STAT_BOX_COL_X + 5,
+                          self.STAT_BOX_COL_Y + 2, False)
+            self.add_text('Armor:    ' + str(self.hero.armor), C.Red, self.STAT_BOX_COL_X + 5, self.STAT_BOX_COL_Y + 3,
+                          False)
+            # HP & XP TEXT Numbers
+            self.add_text('Health: ' + str(self.hero.current_hp) + '/' + str(self.hero.max_hp), C.White,
+                          self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y + 5, False)
+            self.render_hp_bar(self.base_surf, self.hero.current_hp,self.hero.max_hp,True)
+        #     options
+            self.add_text('Combat Options', C.Yellow,self.STAT_BOX_COL_X-8,self.STAT_BOX_COL_Y+9, True)
+            self.add_text('[A] : Attack', C.Yellow, self.STAT_BOX_COL_X-6, self.STAT_BOX_COL_Y+10, False)
+        #     Monster stats
         '''RENDER THE HEROES STATS'''
         if self.hero.state == 'explore':
             self.add_text(self.hero.name, C.Red, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y, True)
@@ -70,6 +88,8 @@ class Text_Manager:
             self.add_text('Health: '+str(self.hero.current_hp)+'/'+str(self.hero.max_hp), C.White, self.STAT_BOX_COL_X, self.STAT_BOX_COL_Y+5, False)
             self.add_text('Experience: ' + str(self.hero.xp) + '/' + str(self.hero.next_level), C.White, self.STAT_BOX_COL_X-5, self.STAT_BOX_COL_Y + 7, False)
             # After all Text is added, then blit to main surf
+
+            self.add_text('Gold: '+str(self.hero.money), C.White, self.STAT_BOX_COL_X-7,self.STAT_BOX_COL_Y+9, False)
             self.base_surf.blit(self.main_text_surface, (550, 0))
 
             # then render the XP and HP bars

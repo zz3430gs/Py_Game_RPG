@@ -1,0 +1,15 @@
+                                Welcome To the Most rudimentary RPG ever!
+                                        Created By Malcolm Leehan
+
+                                      Press 'n' to begin a new game
+
+                                  Future Releases Will Have Save Games
+
+                            In Order to reach the admin functions you must run
+
+                                  The Admin_DB file in the DB Directory!
+
+                                            Enjoy Your Game
+
+
+FINAL END

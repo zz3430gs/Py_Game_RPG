@@ -5,11 +5,12 @@ from graphics import map
 
 class graphics_manager:
     # needs to know about the map instances, so it can call the maps methods for tiling sprites
-    def __init__(self, base_surf,mm,hero):
+    def __init__(self, base_surf,mm,hero,cm):
         # This is the number of tiles the camera will be able to see on X-axis
         self.base_surf = base_surf
         self.cam_width = 21
         self.Hero = hero
+        self.cm = cm
         # This is the number of tiles the camera will be able to see on Y-axis
         self.cam_height = 20
         # self.starter_map = starter_map
@@ -116,6 +117,9 @@ class graphics_manager:
         # # SURF.blit(textures[rand_tile_map[row][column]],(column*TILE_SIZE,row*TILE_SIZE))
         # this should render only tiles that are in the camers view
         # if the hero is exploring render the exploration map
+        if self.Hero.state == 'combat':
+            self.base_surf.fill((0,0,0,))
+
         if self.Hero.state == 'explore':
             for row in range(self.cam_height):
                 for col in range(self.cam_width):
